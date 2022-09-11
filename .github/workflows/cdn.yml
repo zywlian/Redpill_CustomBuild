@@ -8,7 +8,7 @@
 
 name: Refresh CDN
 on:
-  push:
+#  push:
   workflow_dispatch:
 
 jobs:
