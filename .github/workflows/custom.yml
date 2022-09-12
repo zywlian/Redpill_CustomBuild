@@ -631,7 +631,7 @@ jobs:
             fi
             curl -L https://cndl.synology.cn/download/DSM/release/${path}/DSM_$1_$2.pat -o ds.pat
             if [ "$1" == "DVA1622" ]; then
-              curl -L https://cndl.synology.cn/download/DSM/release/7.0.1/42218/DSM_DS3622xs+_42218.pat -o oldpat.tar.gz
+              curl -L https://cndl.synology.cn/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat -o oldpat.tar.gz
             else
               curl -L https://cndl.synology.cn/download/DSM/release/7.0.1/42218/DSM_$1_42218.pat -o oldpat.tar.gz
             fi
@@ -731,7 +731,7 @@ jobs:
           echo "===========================7.1 解密PAT=========================="
           if [[ "${version}" > "7.0.1-42218" ]]; then 
             newpat=${synoplatform}_${synoversion}.pat
-            exdsmpat ${platform} ${synoversion} ${newpat}
+            exdsmpat ${platform/+/%2B} ${synoversion} ${newpat}
             ls -al ./cache
             configfile=./config/${platform}/${version}/config.json
             jq -r .os.sha256 ${configfile}
