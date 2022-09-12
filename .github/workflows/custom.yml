@@ -151,6 +151,7 @@ jobs:
             if (issuebody != null) {
               // Backspace,Tab,垂直制表符,换页,回车,不间断空格,行分隔符,段落分隔符,字节顺序标记
               issuebody = issuebody.replace(/\u0008|\u0009|\u000B|\u000C|\u000D|\u00A0|\u2028|\u2029|\uFEFF/g, "");
+              
               // 容错
               issuebody = issuebody.replace(/：/g, ": ");
               issuebody = issuebody.replace(/，/g, ", ");
@@ -161,7 +162,7 @@ jobs:
               var regex = /\`\`\`([\s\S]*?)\`\`\`/g;
               let options = issuebody.match(regex);
               if (options != null && options.length > 0) {
-                fs.writeFileSync('customshell.sh', options[options.length-1], { 'flag': 'w' }, (err) => { if (err) throw err; });
+                fs.writeFileSync('customshell.sh', options[options.length-1].replace(/\`/g, ""), { 'flag': 'w' }, (err) => { if (err) throw err; });
                 for(option in options) {
                   console.log(options[option]);
                   issuebody = issuebody.replace(options[option], "");
