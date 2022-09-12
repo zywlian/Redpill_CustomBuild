@@ -179,10 +179,10 @@ jobs:
       - name: Set Issues Info
         if: github.event_name == 'issues' && success()
         run: |
-          echo issuenumber: "${{ steps.get-issues.outputs.issuenumber }}"
-          echo issueauth:   "${{ steps.get-issues.outputs.issueauth }}"
-          echo issuetitle:  "${{ steps.get-issues.outputs.issuetitle }}"
-          echo issuebody:   "${{ steps.get-issues.outputs.issuebody }}"
+          echo issuenumber: '${{ steps.get-issues.outputs.issuenumber }}'
+          echo issueauth:   '${{ steps.get-issues.outputs.issueauth }}'
+          echo issuetitle:  '${{ steps.get-issues.outputs.issuetitle }}'
+          echo issuebody:   '${{ steps.get-issues.outputs.issuebody }}'
 
           echo "issuenumber="${{ steps.get-issues.outputs.issuenumber }}"" >> $GITHUB_ENV
           echo "issueauth="${{ steps.get-issues.outputs.issueauth }}"" >> $GITHUB_ENV
