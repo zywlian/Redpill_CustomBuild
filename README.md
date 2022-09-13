@@ -31,7 +31,7 @@
 
 参数      | 必选  |     默认值     | 说明  
 ----------|------|----------------|---------
-platform  | √    |"DS918+"        | 选择你需要编译的型号. "DS918+", "DS920+", "DS1621+", "DS3615xs", "DS3617xs", "DS3622xs+", "DVA1622", "DVA3221"  
+platform  | √    |"DS3622xs+"     | 选择你需要编译的型号. "DS918+", "DS920+", "DS1621+", "DS3615xs", "DS3617xs", "DS3622xs+", "DVA1622", "DVA3221"  
 version   | √    |"7.0.1-42218"   | 选择你需要编译的版本. "7.1.1-42962", "7.1.0-42661", "7.0.1-42218", "6.2.4-25556"  
 config    | ×    |-               | 更新 user_config.json 参数 [①]  参考[#931](https://github.com/wjz304/Redpill_CustomBuild/issues/931)
 map       | ×    |-               | 控制器盘数(SataPortMap)和盘序(DiskIdxMap)两个字段, 并以","间隔. eg: "1,00"  
@@ -42,7 +42,7 @@ usb       | ×    |"0x0001, 0x46f4"| 设备识别码（pid）和供应商ID（vi
 ext       | ×    |-               | 多个请以 "," 间隔. 支持名字（pocopico库）或者链接，名字参考[rp-ext](./exts.json). eg: "r8125, tg3", 链接参考[#753](https://github.com/wjz304/Redpill_CustomBuild/issues/753)  
 exp       | ×    |"pocopico"      | 编译依赖的基础库. "pocopico", "jumkey" (大佬的抉择，7.1 优先选 pocopico, 7.0-jun 优先选 jumkey)
 jun       | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun模式，jun模式 支持 7.0.1~7.1.1 的 DSM。
-\-        | x    |-               | 高级自定义 [②]  
+\-        | ×    |-               | 高级自定义 [②]  
 
 ```
   *①: 格式 json, key会更新到默认的user_config.json中, 因此请谨慎编写.
