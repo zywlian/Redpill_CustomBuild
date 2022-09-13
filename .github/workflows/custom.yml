@@ -771,7 +771,7 @@ jobs:
 
           if [ ${platform} == 'DS920+' -o ${platform} == 'DS1621+' -o ${platform} == 'DVA1622' ]; then
             echo "==================DS920+/DS1621+/DVA1622 .dtb==================="
-            ./ext-manager.sh add ${rpext}/redpill-dtb-static/rpext-index.json
+            ./ext-manager.sh add https://raw.githubusercontent.com/wjz304/rp-ext/master/redpill-dtb-static/rpext-index.json
             ./ext-manager.sh _update_platform_exts ${synoplatform}_${synoversion} redpill-dtb-static
 
             if [ -n "${{ steps.info.outputs.dtb }}" ]; then
