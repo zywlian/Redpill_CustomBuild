@@ -274,13 +274,14 @@ jobs:
                     iscustom = 'false'
                     errinfo = 'version 参数错误, 当前仅支持 {}.'.format(', '.join(versions))
 
-                if iscustom == 'true' and config != '':
+                if config != '':
                     try:
                         config = json.dumps(config)
                         json.loads(config)
                     except Exception as e:
-                        iscustom = 'false'
-                        errinfo = 'config 参数错误, 不符合JSON规范 {}.'.format(e)
+                        if iscustom == 'true':
+                            iscustom = 'false'
+                            errinfo = 'config 参数错误, 不符合JSON规范 {}.'.format(e)
 
                 if iscustom == 'true' and map != '':
                     maps = [x.strip() for x in re.split(',| |\|', map) if x.strip() != '']
