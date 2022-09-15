@@ -50,17 +50,17 @@ on:
         default: ''
         type: string
 
-      sn: 
-        description: '请输入序列号. 默认根据型号随机生成. eg: 1980PDN002189'
-        required: false
-        default: ''
-        type: string
+      #sn: 
+      #  description: '请输入序列号. 默认根据型号随机生成. eg: 1980PDN002189'
+      #  required: false
+      #  default: ''
+      #  type: string
 
-      mac: 
-        description: '请输入MAC地址, 多个请以","间隔. 默认根据型号随机生成. eg: 001132888A95, 001132888A96'
-        required: false
-        default: ''
-        type: string
+      #mac: 
+      #  description: '请输入MAC地址, 多个请以","间隔. 默认根据型号随机生成. eg: 001132888A95, 001132888A96'
+      #  required: false
+      #  default: ''
+      #  type: string
 
       usb: 
         description: '请输入设备识别码(pid)和供应商ID(vid)两个字段, 并以","间隔. eg: 0xa4a5, 0x0525'
@@ -238,8 +238,8 @@ jobs:
                                 if 'config' in body: config = body['config'] #l(body['config']).strip()
                                 if 'map' in body: map = body['map'].strip()
                                 if 'dtb' in body: dtb = body['dtb'].strip()
-                                if 'sn' in body: sn = body['sn'].strip()
-                                if 'mac' in body: mac = body['mac'].strip()
+                                #if 'sn' in body: sn = body['sn'].strip()
+                                #if 'mac' in body: mac = body['mac'].strip()
                                 if 'usb' in body: usb = body['usb'].strip()
                                 if 'ext' in body: ext = body['ext'].strip()
                                 if 'exp' in body: exp = body['exp'].strip()
@@ -256,8 +256,8 @@ jobs:
                     # config = '${{ inputs.config }}'.strip()   # Actions 限制10个参数
                     map = '${{ inputs.map }}'.strip()
                     dtb = '${{ inputs.dtb }}'.strip()
-                    sn = '${{ inputs.sn }}'.strip()
-                    mac = '${{ inputs.mac }}'.strip()
+                    #sn = '${{ inputs.sn }}'.strip()
+                    #mac = '${{ inputs.mac }}'.strip()
                     usb = '${{ inputs.usb }}'.strip()
                     ext = '${{ inputs.ext }}'.strip()
                     exp = '${{ inputs.exp }}'.strip()

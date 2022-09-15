@@ -37,8 +37,6 @@ version   | √    |"7.0.1-42218"   | 选择你需要编译的版本. "7.1.1-429
 config    | ×    |-               | 更新 user_config.json 参数 [①]  参考[#931](https://github.com/wjz304/Redpill_CustomBuild/issues/931)
 map       | ×    |-               | 控制器盘数(SataPortMap)和盘序(DiskIdxMap)两个字段, 并以","间隔. eg: "1,00"  
 dtb       | ×    |-               | dtb文件下载URL(support ext: .dts,.dtb,.tar.gz,.zip) [#47](https://github.com/wjz304/Redpill_CustomBuild/issues/47)
-sn        | ×    |-               | 序列号. 默认根据型号随机生成. eg: "1980PDN002189" 
-mac       | ×    |-               | MAC地址. 多个请以 "," 间隔. 默认根据型号随机生成. eg: "001132888A95, 001132888A96"  
 usb       | ×    |"0x0001, 0x46f4"| 设备识别码（pid）和供应商ID（vid）[格式: pid, vid]. 默认无.  eg: "0xa4a5, 0x0525"  
 ext       | ×    |-               | 多个请以 "," 间隔. 支持名字（pocopico库）或者链接，名字参考[rp-ext](./exts.json). eg: "r8125, tg3", 链接参考[#753](https://github.com/wjz304/Redpill_CustomBuild/issues/753)  
 exp       | ×    |"pocopico"      | 编译依赖的基础库. "pocopico", "jumkey" (大佬的抉择，7.1 优先选 pocopico, 7.0-jun 优先选 jumkey)
