@@ -20,7 +20,7 @@
 `普通模式默认使用pocopico的驱动库, dev模式默认使用我fork的驱动库(如果报 Checksum 错, 请尝试使用(dev)模式), `  
 `并发较多时, 有概率出现curl错误或者 未触发编译的情况, 过几分钟再试...`  
 ‼️‼️‼️  
-`再次强调一下, 本项目全部代码和过程为公开状态, SN & MAC 自定义有泄露的风险, 如涉及个人财产尽量不要填写, 或者fork到自己名下操作.`
+`2022-09-15 22:35 由于安全问题, 已取消SN/MAC参数的定制.请勿再填写.`
 
 ## 使用  
 在本项目 Issues 中创建问题(符合下述规范), 按需填写即可发起定制构建[【👉图文说明】](https://github.com/wjz304/Redpill_CustomBuild/blob/main/guide/Issues.md) [【👉注意事项】](https://github.com/wjz304/Redpill_CustomBuild/blob/main/tips.md).  
