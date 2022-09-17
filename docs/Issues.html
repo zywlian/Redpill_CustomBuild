@@ -230,7 +230,7 @@
           let idx = 1;
           if (exts.length > 0) {
             html +=
-              '<span class="pl-mi1">点击驱动名添加/删除 (* 结尾的为无效驱动, # 结尾的为sha256错误驱动, */# 强制添加均将编译失败.) </span><br />';
+              '<span class="pl-mi1">点击驱动名添加/删除 (* 结尾的为无效驱动, # 结尾的为sha256错误驱动, */# 强制添加将编译失败.) </span><br />';
             html +=
               '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-virtio" onclick="return processext(\'-virtio\')" autofocus="" >-virtio</button>&nbsp;';
             html +=
@@ -240,7 +240,7 @@
             html +=
               '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-boot-wait" disabled="true" onclick="return processext(\'-boot-wait\')" autofocus="" >-boot-wait</button>&nbsp;';
             html +=
-              '<span class="pl-md">(注意: boot-wait, misc, acpid2, virtio 默认会进行判断添加, 此处以"-" 开头代表删除, 无特殊需求, 不要点!!!.)</span><br />';
+              '<span class="pl-md">(注意: boot-wait, misc, acpid2, virtio 默认会进行判断添加, 此处以"-" 开头代表删除, 无特殊需求请勿删!!!.)</span><br />';
           }
           for (var i in exts) {
             var par = "";
