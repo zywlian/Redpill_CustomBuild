@@ -154,7 +154,7 @@ jobs:
 
                 dtb = ''
                 ext = ''
-                exp = ''
+                exp = 'pocopico'
                 jun = '0'
                 dev = '0'
 
