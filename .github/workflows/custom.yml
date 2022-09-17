@@ -614,7 +614,7 @@ jobs:
                 if '${{ steps.info.outputs.vid }}' != '':
                     config["extra_cmdline"]["vid"] = '${{ steps.info.outputs.vid }}'
                 if '${{ steps.info.outputs.pid }}' != '':
-                    config["extra_cmdline"]["pid"] = '${{ steps.info.outputs.vid }}'
+                    config["extra_cmdline"]["pid"] = '${{ steps.info.outputs.pid }}'
 
                 if '${{ steps.info.outputs.sn }}' != '':
                     config["extra_cmdline"]["sn"] = '${{ steps.info.outputs.sn }}'
