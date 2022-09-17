@@ -190,7 +190,7 @@
 
           for (var i = 0; i < $("#exp")[0].options.length; i++) {
             if ($("#exp")[0].options[i].value == "jumkey") {
-              if (result["jumkey_develop"][$("#platform").val()].includes($("#version").val())) {
+              if (result["jumkey_develop"].hasOwnProperty($("#platform").val()) && result["jumkey_develop"][$("#platform").val()].includes($("#version").val())) {
                 $("#exp")[0].options[i].style.display = "block";
                 $("#exp")[0].options[i].selected = true;
               } else {
