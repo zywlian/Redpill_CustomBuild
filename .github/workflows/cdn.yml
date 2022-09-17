@@ -24,10 +24,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           sudo timedatectl set-timezone "Asia/Shanghai"
 
-          curl -L "https://purge.jsdelivr.net/gh/jeremyfa/yaml.js@develop/dist/yaml.min.js"
-          curl -L "https://purge.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/.github/workflows/custom.yml"
-          curl -L "https://purge.jsdelivr.net/gh/pocopico/rp-ext@main/redpill/rpext-index.json"
-          curl -L "https://purge.jsdelivr.net/gh/wjz304/rp-ext@main/redpill/rpext-index.json"
+          curl -L "https://purge.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/parameter.json"
+          curl -L "https://purge.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/loads.json"
           curl -L "https://purge.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/exts.json"
-          curl -L "https://purge.jsdelivr.net/npm/marked/marked.min.js"
           curl -L "https://purge.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/tips.md"
