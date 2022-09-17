@@ -132,9 +132,13 @@ jobs:
         run: |
           sudo rm -rf redpill-load_pocopico_develop
           git clone --branch develop https://github.com/pocopico/redpill-load.git redpill-load_pocopico_develop
+          # https://github.com/pocopico/rp-ext/blob/main/redpill/rpext-index.json 并不包含 DS3617xs/6.2.4-25556, 线上无法获取
+          rm -rf redpill-load_pocopico_develop/config/DS3617xs/6.2.4-25556
 
           sudo rm -rf redpill-load_pocopico_jun
           git clone --branch jun https://github.com/pocopico/redpill-load.git redpill-load_pocopico_jun
+          # https://github.com/pocopico/rp-ext/blob/main/redpill/rpext-index.json 并不包含 DS3617xs/6.2.4-25556, 线上无法获取
+          rm -rf redpill-load_pocopico_jun/config/DS3617xs/6.2.4-25556
 
           sudo rm -rf redpill-load_jumkey_develop
           git clone --branch develop https://github.com/jumkey/redpill-load.git redpill-load_jumkey_develop
