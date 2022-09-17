@@ -12,85 +12,11 @@ on:
     types: [opened, reopened]
   workflow_dispatch:
     inputs:
-      platform:
-        description: '请选择你需要编译的型号'
+      body: 
+        description: 'issuss body'
         required: true
-        default: 'DS3622xs+' 
-        type: choice
-        options:
-        - DS918+
-        - DS920+
-        - DS1621+
-        - DS3615xs
-        - DS3617xs
-        - DS3622xs+
-        - DVA1622
-        - DVA3221
-
-      version:
-        description: '请选择你需要编译的版本'
-        required: true
-        default: '7.0.1-42218' 
-        type: choice
-        options:
-        - 7.1.1-42962
-        - 7.1.0-42661
-        - 7.0.1-42218
-        - 6.2.4-25556
-        
-      map: 
-        description: '请输入控制器盘数(SataPortMap)和盘序(DiskIdxMap)两个字段, 并以","间隔. eg: 1,00'
-        required: false
         default: ''
         type: string
-
-      dtb:
-        description: '【DS920+, DS1621+, DVA1622】需要 dtb 文件的下载链接.(支持的文件类型: .dts,.dtb,.tar.gz,.zip)'
-        required: false
-        default: ''
-        type: string
-
-      #sn: 
-      #  description: '请输入序列号. 默认根据型号随机生成. eg: 1980PDN002189'
-      #  required: false
-      #  default: ''
-      #  type: string
-
-      #mac: 
-      #  description: '请输入MAC地址, 多个请以","间隔. 默认根据型号随机生成. eg: 001132888A95, 001132888A96'
-      #  required: false
-      #  default: ''
-      #  type: string
-
-      usb: 
-        description: '请输入设备识别码(pid)和供应商ID(vid)两个字段, 并以","间隔. eg: 0xa4a5, 0x0525'
-        required: false
-        default: '0x0001, 0x46f4'
-        type: string
-
-      ext: 
-        description: '请输入扩展驱动, 多个请以 "," 间隔(请酌情添加, 太多编不过). eg: r8125, tg3'
-        required: false
-        default: ''
-        type: string
-
-      exp:
-        description: '请选择编译依赖的基础库. (7.1 优先选 pocopico, 7.0/jun 优先选 jumkey.)'
-        required: true
-        default: 'pocopico' 
-        type: choice
-        options:
-        - 'pocopico'
-        - 'jumkey'
-
-      jun:
-        description: '请选择是否jun模式编译. (仅7.0.1-42218 版本可选, jun模式 支持在线升级, 非jun模式不支持升级.)'
-        required: true
-        default: '0' 
-        type: choice
-        options:
-        - '0'
-        - '1'
 
 jobs:
   build:
@@ -208,61 +134,77 @@ jobs:
                 errinfo = ''
                 warinfo = ''
 
-                platform = 'DS3622xs+'
-                version = '7.0.1-42218'
+                platform = ''
+                version = ''
                 config = ''
-                map = ''
-                dtb = ''
+
+                maxdisks = ''
+                maxlanport = ''
+                internalportcfg = ''
+                esataportcfg = ''
+                usbportcfg = ''
                 sn = ''
                 mac = ''
-                usb = ''
+                netif_num = ''
+                vid = ''
+                pid = ''
+                diskidxmap = ''
+                sataportmap = ''
+                sasidxmap = ''
+
+                dtb = ''
                 ext = ''
-                exp = 'pocopico'
+                exp = ''
                 jun = '0'
                 dev = '0'
 
-                if '${{ github.event_name }}' == 'issues':
-                    if '${{ env.issuetitle }}'.lower().startswith('custom'):
-                        issues = 'true'
-
-                        body = {}
-                        try:
-                            body = json.loads('${{ env.issuebody }}')
-                            if len(body) == 0:
-                                iscustom = 'false'
-                                errinfo = 'body 错误, body is null'
-                            else:
-                                # l = lambda x: x.strip() if isinstance(x, str) else str(x)
-                                if 'platform' in body: platform = body['platform'].strip()
-                                if 'version' in body: version = body['version'].strip()
-                                if 'config' in body: config = body['config'] #l(body['config']).strip()
-                                if 'map' in body: map = body['map'].strip()
-                                if 'dtb' in body: dtb = body['dtb'].strip()
-                                #if 'sn' in body: sn = body['sn'].strip()
-                                #if 'mac' in body: mac = body['mac'].strip()
-                                if 'usb' in body: usb = body['usb'].strip()
-                                if 'ext' in body: ext = body['ext'].strip()
-                                if 'exp' in body: exp = body['exp'].strip()
-                                if 'jun' in body: jun = body['jun'].strip()
-                                if 'dev' in body: dev = body['dev'].strip()
-                        except Exception as e:
+                try:
+                    body = {}
+                    bodyOriginal = {}
+                    if '${{ github.event_name }}' == 'issues':
+                        if '${{ env.issuetitle }}'.lower().startswith('custom'):
+                            issues = 'true'
+                            bodyOriginal = json.loads('${{ env.issuebody }}')
+                        else:
                             iscustom = 'false'
-                            errinfo = 'body 错误, 不符合JSON规范 {}.'.format(e)
                     else:
+                        bodyOriginal = json.loads('${{ inputs.body }}')
+
+                    for k, v in bodyOriginal.items():
+                      body[k.lower()] = v
+
+                    if len(body) == 0:
                         iscustom = 'false'
-                else:
-                    platform = '${{ inputs.platform }}'.strip()
-                    version = '${{ inputs.version }}'.strip()
-                    # config = '${{ inputs.config }}'.strip()   # Actions 限制10个参数
-                    map = '${{ inputs.map }}'.strip()
-                    dtb = '${{ inputs.dtb }}'.strip()
-                    #sn = '${{ inputs.sn }}'.strip()
-                    #mac = '${{ inputs.mac }}'.strip()
-                    usb = '${{ inputs.usb }}'.strip()
-                    ext = '${{ inputs.ext }}'.strip()
-                    exp = '${{ inputs.exp }}'.strip()
-                    jun = '${{ inputs.jun }}'.strip()
-                    # dev = '${{ inputs.dev }}'.strip()         # Actions 限制10个参数
+                        errinfo = 'body 错误, body is null'
+                    else:
+                        # l = lambda x: x.strip() if isinstance(x, str) else str(x)
+                        if 'platform' in body: platform = body['platform'].strip()
+                        if 'version' in body: version = body['version'].strip()
+                        if 'config' in body: config = body['config'] #l(body['config']).strip()
+                        
+                        if 'maxdisks' in body: maxdisks = body['maxdisks'].strip()
+                        if 'maxlanport' in body: maxlanport = body['maxlanport'].strip()
+                        if 'internalportcfg' in body: internalportcfg = body['internalportcfg'].strip()
+                        if 'esataportcfg' in body: esataportcfg = body['esataportcfg'].strip()
+                        if 'usbportcfg' in body: usbportcfg = body['usbportcfg'].strip()
+                        #if 'sn' in body: sn = body['sn'].strip()
+                        #if 'mac' in body: mac = body['mac'].strip()
+                        if 'netif_num' in body: netif_num = body['netif_num'].strip()
+                        if 'vid' in body: vid = body['vid'].strip()
+                        if 'pid' in body: pid = body['pid'].strip()
+                        if 'diskidxmap' in body: diskidxmap = body['diskidxmap'].strip()
+                        if 'sataportmap' in body: sataportmap = body['sataportmap'].strip()
+                        if 'sasidxmap' in body: sasidxmap = body['sasidxmap'].strip()
+
+                        if 'dtb' in body: dtb = body['dtb'].strip()
+                        if 'ext' in body: ext = body['ext'].strip()
+                        if 'exp' in body: exp = body['exp'].strip()
+                        if 'jun' in body: jun = body['jun'].strip()
+                        if 'dev' in body: dev = body['dev'].strip()
+
+                except Exception as e:
+                    iscustom = 'false'
+                    errinfo = 'body 错误, 不符合JSON规范 {}.'.format(e)
 
                 platforms = ['DS918+', 'DS920+', 'DS1621+', 'DS3615xs', 'DS3617xs', 'DS3622xs+', 'DVA1622', 'DVA3221']
                 if iscustom == 'true' and not platform in platforms:
@@ -283,14 +225,102 @@ jobs:
                             iscustom = 'false'
                             errinfo = 'config 参数错误, 不符合JSON规范 {}.'.format(e)
 
-                if iscustom == 'true' and map != '':
-                    maps = [x.strip() for x in re.split(',| |\|', map) if x.strip() != '']
-                    # if len(maps) == 2 and maps[0].isdigit() and all(c in string.hexdigits for c in maps[1]) and len(maps[1]) == 2 * len(maps[0]):
-                    if len(maps) == 2 and maps[0].isdigit() and all(c in string.hexdigits for c in maps[1]) and len(maps[1]) >= len(maps[0]):
-                        map = ','.join(maps)
+                if iscustom == 'true' and maxdisks != '' and (not maxdisks.isdigit() or int(maxdisks) < 1 or int(maxdisks) > 32):
+                    iscustom = 'false'
+                    errinfo = 'maxdisks 参数错误, 请填写 1 - 32 之间的数字.'
+
+                if iscustom == 'true' and maxlanport != '' and (not maxlanport.isdigit() or int(maxlanport) < 0 or int(maxlanport) > 31):
+                    iscustom = 'false'
+                    errinfo = 'maxlanport 参数错误, 请填写 0 - 31 之间的数字.'
+
+                if iscustom == 'true' and internalportcfg != '':
+                    if len(internalportcfg) == 6 and internalportcfg[:2].lower().startswith('0x') and all(c in string.hexdigits for c in internalportcfg[2:]):
+                        pass
+                    elif len(internalportcfg) == 4 and all(c in string.hexdigits for c in internalportcfg):
+                        internalportcfg = '0x' + internalportcfg
                     else:
                         iscustom = 'false'
-                        errinfo = 'map 参数错误, 请填写控制器盘数(SataPortMap)和盘序(DiskIdxMap)两个字段(DiskIdxMap 的位数应该是 SataPortMap 的2倍), 并以","间隔. 比如: "1,00".'
+                        errinfo = 'internalportcfg 参数错误, 请填写十六进制数.'
+
+                if iscustom == 'true' and esataportcfg != '':
+                    if len(esataportcfg) > 2 and esataportcfg[:2].lower().startswith('0x') and all(c in string.hexdigits for c in esataportcfg[2:]):
+                        pass
+                    elif all(c in string.hexdigits for c in esataportcfg):
+                        esataportcfg = '0x' + esataportcfg
+                    else:
+                        iscustom = 'false'
+                        errinfo = 'esataportcfg 参数错误, 请填写十六进制数.'
+
+                if iscustom == 'true' and usbportcfg != '':
+                    if len(usbportcfg) > 2 and usbportcfg[:2].lower().startswith('0x') and all(c in string.hexdigits for c in usbportcfg[2:]):
+                        pass
+                    elif all(c in string.hexdigits for c in usbportcfg):
+                        usbportcfg = '0x' + usbportcfg
+                    else:
+                        iscustom = 'false'
+                        errinfo = 'usbportcfg 参数错误, 请填写十六进制数.'
+
+                if iscustom == 'true' and sn != '':
+                    warinfo = 'sn'
+                    if not sn.isalnum():
+                        iscustom = 'false'
+                        errinfo = 'sn 参数错误.'
+                        warinfo = 'sn'
+
+                if iscustom == 'true' and mac != '':
+                    warinfo = 'mac' if warinfo == '' else 'sn, mac'
+                    macs = [x.strip() for x in re.split(',| |\|', mac) if x.strip() != '']
+                    if len(macs) > 0 or len(macs) <= 8:
+                        mac = ','.join(macs)
+                    else:
+                        iscustom = 'false'
+                        errinfo = 'mac 参数错误.'
+
+                if iscustom == 'true' and netif_num != '' and (not netif_num.isdigit() or int(netif_num) < 1 or int(netif_num) > 8):
+                    iscustom = 'false'
+                    errinfo = 'netif_num 参数错误, 请填写 1 - 8 之间的数字.'
+
+                if iscustom == 'true' and mac != '' and netif_num != '' and int(netif_num) != len(mac.split(',')):
+                    iscustom = 'false'
+                    errinfo = 'netif_num 应该与 mac 的个数相等, 请填写匹配的数值.'
+
+                if iscustom == 'true' and vid != '':
+                    if len(vid) == 6 and vid.lower().startswith('0x') and all(c in string.hexdigits for c in vid[2:]):
+                        pass
+                    elif len(vid) == 4 and all(c in string.hexdigits for c in vid):
+                        vid = '0x' + vid
+                    else:
+                        iscustom = 'false'
+                        errinfo = 'vid 参数错误, 请填写十六进制数.'
+
+                if iscustom == 'true' and pid != '':
+                    if len(pid) == 6 and pid.lower().startswith('0x') and all(c in string.hexdigits for c in pid[2:]):
+                        pass
+                    elif len(pid) == 4 and all(c in string.hexdigits for c in pid):
+                        pid = '0x' + pid
+                    else:
+                        iscustom = 'false'
+                        errinfo = 'pid 参数错误, 请填写十六进制数.'
+
+                if iscustom == 'true' and ((vid != '' and pid == '') or (vid == '' and pid != '')):
+                    iscustom = 'false'
+                    errinfo = 'vid 和 pid 参数不可单独定制, 应成对出现, 请填写完整的两个参数.'
+
+                if iscustom == 'true' and diskidxmap != '' and not all(c in string.hexdigits for c in diskidxmap):
+                    iscustom = 'false'
+                    errinfo = 'diskidxmap 参数错误, 请填写十六进制数..'
+                
+                if iscustom == 'true' and sataportmap != '' and not sataportmap.isdigit():
+                    iscustom = 'false'
+                    errinfo = 'sataportmap 参数错误, 请填写数字.'
+                
+                if iscustom == 'true' and sasidxmap != '' and not sasidxmap.isdigit():
+                    iscustom = 'false'
+                    errinfo = 'sasidxmap 参数错误, 请填写数字.'
+
+                if iscustom == 'true' and ((diskidxmap != '' and sataportmap == '') or (diskidxmap == '' and sataportmap != '') or len(diskidxmap) < len(sataportmap)):
+                    iscustom = 'false'
+                    errinfo = 'diskidxmap 和 sataportmap 参数不可单独定制, 且 diskidxmap的位数应该为sataportmap位数的2倍.'
 
                 if iscustom == 'true' and dtb != '':
                     url = dtb
@@ -357,32 +387,6 @@ jobs:
                     except Exception as e:
                         iscustom = 'false'
                         errinfo = 'dtb 参数错误, {}, 请稍后重试.'.format(e)
-
-                if iscustom == 'true' and sn != '':
-                    warinfo = 'sn'
-                    if not sn.isalnum():
-                        iscustom = 'false'
-                        errinfo = 'sn 参数错误.'
-                        warinfo = 'sn'
-
-                if iscustom == 'true' and mac != '':
-                    warinfo = 'mac' if warinfo == '' else 'sn, mac'
-                    macs = [x.strip() for x in re.split(',| |\|', mac) if x.strip() != '']
-                    if len(macs) > 0 or len(macs) <= 8:
-                        mac = ','.join(macs)
-                    else:
-                        iscustom = 'false'
-                        errinfo = 'mac 参数错误.'
-
-                if iscustom == 'true' and usb != '':
-                    usbs = [x.strip() for x in re.split(',| |\|', usb) if x.strip() != '']
-                    if len(usbs) == 2 \
-                    and len(usbs[0]) == 6 and usbs[0].lower().startswith('0x') and all(c in string.hexdigits for c in usbs[0][2:]) \
-                    and len(usbs[1]) == 6 and usbs[1].lower().startswith('0x') and all(c in string.hexdigits for c in usbs[1][2:]):
-                        usb = ','.join(usbs)
-                    else:
-                        iscustom = 'false'
-                        errinfo = 'usb 参数错误, 请填写设备识别码(pid)和供应商ID(vid)两个字段的值, 并以","间隔. eg: 0xa4a5, 0x0525'
 
                 if iscustom == 'true' and ext != '':
                     rpKey = platform.replace('+', 'p').lower() + '_' + version.split('-')[-1]
@@ -461,11 +465,20 @@ jobs:
                 set_output('platform', platform)
                 set_output('version', version)
                 set_output('config', config)
-                set_output('map', map)
-                set_output('dtb', dtb)
+                set_output('maxdisks', maxdisks)
+                set_output('maxlanport', maxlanport)
+                set_output('internalportcfg', internalportcfg)
+                set_output('esataportcfg', esataportcfg)
+                set_output('usbportcfg', usbportcfg)
                 set_output('sn', sn)
                 set_output('mac', mac)
-                set_output('usb', usb)
+                set_output('netif_num', netif_num)
+                set_output('vid', vid)
+                set_output('pid', pid)
+                set_output('diskidxmap', diskidxmap)
+                set_output('sataportmap', sataportmap)
+                set_output('sasidxmap', sasidxmap)
+                set_output('dtb', dtb)
                 set_output('ext', ext)
                 set_output('exp', exp)
                 set_output('jun', jun)
@@ -473,22 +486,33 @@ jobs:
 
       - name: Echo Build Info
         run: |
-          echo issues:    "${{ steps.info.outputs.issues }}"
-          echo iscustom:  "${{ steps.info.outputs.iscustom }}"
-          echo errinfo:   "${{ steps.info.outputs.errinfo }}"
-          echo warinfo:   "${{ steps.info.outputs.warinfo }}"
-          echo platform:  "${{ steps.info.outputs.platform }}"
-          echo version:   "${{ steps.info.outputs.version }}"
-          echo config:    "${{ steps.info.outputs.config }}"
-          echo map:       "${{ steps.info.outputs.map }}"
-          echo dtb:       "${{ steps.info.outputs.dtb }}"
-          echo sn:        "${{ steps.info.outputs.sn }}"
-          echo mac:       "${{ steps.info.outputs.mac }}"
-          echo usb:       "${{ steps.info.outputs.usb }}"
-          echo ext:       "${{ steps.info.outputs.ext }}"
-          echo exp:       "${{ steps.info.outputs.exp }}"
-          echo jun:       "${{ steps.info.outputs.jun }}"
-          echo dev:       "${{ steps.info.outputs.dev }}"
+          echo issues:            "${{ steps.info.outputs.issues }}"
+          echo iscustom:          "${{ steps.info.outputs.iscustom }}"
+          echo errinfo:           "${{ steps.info.outputs.errinfo }}"
+          echo warinfo:           "${{ steps.info.outputs.warinfo }}"
+
+          echo platform:          "${{ steps.info.outputs.platform }}"
+          echo version:           "${{ steps.info.outputs.version }}"
+          echo config:            "${{ steps.info.outputs.config }}"
+
+          echo maxdisks:          "${{ steps.info.outputs.maxdisks }}"
+          echo maxlanport:        "${{ steps.info.outputs.maxlanport }}"
+          echo internalportcfg:   "${{ steps.info.outputs.internalportcfg }}"
+          echo esataportcfg:      "${{ steps.info.outputs.esataportcfg }}"
+          echo usbportcfg:        "${{ steps.info.outputs.usbportcfg }}"
+          echo sn:                "${{ steps.info.outputs.sn }}"
+          echo mac:               "${{ steps.info.outputs.mac }}"
+          echo netif_num:         "${{ steps.info.outputs.netif_num }}"
+          echo vid:               "${{ steps.info.outputs.vid }}"
+          echo pid:               "${{ steps.info.outputs.pid }}"
+          echo diskidxmap:        "${{ steps.info.outputs.diskidxmap }}"
+          echo sataportmap:       "${{ steps.info.outputs.sataportmap }}"
+          echo sasidxmap:         "${{ steps.info.outputs.sasidxmap }}"
+          echo dtb:               "${{ steps.info.outputs.dtb }}"
+          echo ext:               "${{ steps.info.outputs.ext }}"
+          echo exp:               "${{ steps.info.outputs.exp }}"
+          echo jun:               "${{ steps.info.outputs.jun }}"
+          echo dev:               "${{ steps.info.outputs.dev }}"
 
       - name: Add Issues labels
         if: steps.info.outputs.issues == 'true' && steps.info.outputs.iscustom == 'true'
@@ -557,8 +581,8 @@ jobs:
                     "extra_cmdline": {
                         "pid": "0x0001",
                         "vid": "0x46f4",
-                        "sn": "2150SQRW1ZAHH",
-                        "mac1": "001132FA6CD3"
+                        "sn": "",
+                        "mac1": ""
                     },
                     "synoinfo": {
                         "internalportcfg": "0xffff",
@@ -584,33 +608,54 @@ jobs:
                     inconfig = json.loads('${{ steps.info.outputs.config }}')
                     config.update(inconfig)
 
-                if "extra_cmdline" in config:
-                    if '${{ steps.info.outputs.sn }}' != '':
-                        config["extra_cmdline"]["sn"] = '${{ steps.info.outputs.sn }}'
-                    elif len(dat) == 2:
-                        config["extra_cmdline"]["sn"] = dat[1].strip()
+                if not "extra_cmdline" in config:
+                    config["extra_cmdline"] = {}
 
-                    if '${{ steps.info.outputs.mac }}' != '':
-                        macs = '${{ steps.info.outputs.mac }}'.split(',')
-                        for index, item in enumerate(macs):
-                            config["extra_cmdline"]["mac{}".format(index+1)] = item.replace(':', '').upper()
-                        config["extra_cmdline"]["netif_num"] = len(macs)
-                    elif len(dat) == 2:
-                        config["extra_cmdline"]["mac1"] = dat[0].strip().replace(':', '')
-                        config["extra_cmdline"]["mac2"] = hex(int(dat[0].strip().replace(':', ''), 16) + 1)[2:].rjust(12,'0').upper()
-                        config["extra_cmdline"]["netif_num"] = 2
+                if '${{ steps.info.outputs.vid }}' != '':
+                    config["extra_cmdline"]["vid"] = '${{ steps.info.outputs.vid }}'
+                if '${{ steps.info.outputs.pid }}' != '':
+                    config["extra_cmdline"]["pid"] = '${{ steps.info.outputs.vid }}'
 
-                    if '${{ steps.info.outputs.map }}' != '':
-                        maps = '${{ steps.info.outputs.map }}'.split(',')
-                        if len(maps) == 2:
-                            config["extra_cmdline"]["SataPortMap"] = maps[0]
-                            config["extra_cmdline"]["DiskIdxMap"] = maps[1]
+                if '${{ steps.info.outputs.sn }}' != '':
+                    config["extra_cmdline"]["sn"] = '${{ steps.info.outputs.sn }}'
+                if config["extra_cmdline"]["sn"] == '' and len(dat) == 2:
+                    config["extra_cmdline"]["sn"] = dat[1].strip()
 
-                    if '${{ steps.info.outputs.usb }}' != '':
-                        usbs = '${{ steps.info.outputs.usb }}'.split(',')
-                        if len(usbs) == 2:
-                            config["extra_cmdline"]["pid"] = usbs[0]
-                            config["extra_cmdline"]["vid"] = usbs[1]
+                if '${{ steps.info.outputs.mac }}' != '':
+                    macs = '${{ steps.info.outputs.mac }}'.split(',')
+                    for index, item in enumerate(macs):
+                        config["extra_cmdline"]["mac{}".format(index+1)] = item.replace(':', '').upper()
+                    config["extra_cmdline"]["netif_num"] = len(macs)
+                else:
+                    netnum = 2
+                    if '${{ steps.info.outputs.netif_num }}' != '':
+                        netnum = int('${{ steps.info.outputs.netif_num }}')
+                    if len(dat) == 2:
+                        for index in range(netnum):
+                            config["extra_cmdline"]["mac{}".format(index+1)] = hex(int(dat[0].strip().replace(':', ''), 16) + index)[2:].rjust(12,'0').upper()
+                        config["extra_cmdline"]["netif_num"] = netnum
+
+                if '${{ steps.info.outputs.diskidxmap }}' != '':
+                    config["extra_cmdline"]["DiskIdxMap"] = '${{ steps.info.outputs.diskidxmap }}'
+                if '${{ steps.info.outputs.sataportmap }}' != '':
+                    config["extra_cmdline"]["SataPortMap"] = '${{ steps.info.outputs.sataportmap }}'
+                if '${{ steps.info.outputs.sasidxmap }}' != '':
+                    config["extra_cmdline"]["SasIdxMap"] = '${{ steps.info.outputs.sasidxmap }}'
+
+
+                if not "synoinfo" in config:
+                    config["synoinfo"] = {}
+
+                if '${{ steps.info.outputs.maxdisks }}' != '':
+                    config["synoinfo"]["maxdisks"] = '${{ steps.info.outputs.maxdisks }}'
+                if '${{ steps.info.outputs.maxlanport }}' != '':
+                    config["synoinfo"]["maxlanport"] = '${{ steps.info.outputs.maxlanport }}'
+                if '${{ steps.info.outputs.internalportcfg }}' != '':
+                    config["synoinfo"]["internalportcfg"] = '${{ steps.info.outputs.internalportcfg }}'
+                if '${{ steps.info.outputs.esataportcfg }}' != '':
+                    config["synoinfo"]["esataportcfg"] = '${{ steps.info.outputs.esataportcfg }}'
+                if '${{ steps.info.outputs.usbportcfg }}' != '':
+                    config["synoinfo"]["usbportcfg"] = '${{ steps.info.outputs.usbportcfg }}'
 
                 print(json.dumps(config, indent=4))
 
