@@ -95,7 +95,7 @@
             var html = "";
             for (var key in result) {
               console.log(key, result[key]);
-              html += createInput(result[key])
+              html += createInput(result[key]);
             }
             $("#inputs").prepend(html);
 
@@ -118,7 +118,7 @@
       }
 
       function changemode() {
-        dev = (dev == "1") ? "0" : "1";
+        dev = dev == "1" ? "0" : "1";
         setLogo(dev);
         createExtBtn();
       }
@@ -131,12 +131,13 @@
         var type = "";
         var dft = "";
         var req = "";
-        
+        var info = "";
         if (data.hasOwnProperty("name")) name = data.name;
         if (data.hasOwnProperty("description")) desc = data.description;
         if (data.hasOwnProperty("type")) type = data.type;
         if (data.hasOwnProperty("default")) dft = data.default;
         if (data.hasOwnProperty("required")) req = data.required;
+        if (data.hasOwnProperty("detailedinfo")) info = data.detailedinfo;
 
         if (type == "choice") {
           var par = "";
@@ -150,12 +151,16 @@
             if (opts[v] == dft) addpar = 'selected="selected"';
             html += `<option ${addpar} value="${opts[v]}">${opts[v]}</option>`;
           }
-          html += `</select>使用说明：${desc}</div></div>`;
+          html += `</select>`;
+          html += `<a class="js-navigation-open Link--primary" title="${info}" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="#">使用说明：${desc}</a>`
+          html += `</div></div>`;
         } else if (type == "string") {
           var par = "";
           if (req) par = '"required"';
           html += `<div class="form-group mt-1 mb-2 ${par} "><div class="form-group-header"><label class="color-fg-default text-mono f6" for="${name}">${name}</label></div><div class="form-group-body">`;
-          html += `<input class="form-control input-contrast input-sm" type="text" id="${name}" name="inputs[${name}]" value="${dft}" />使用说明：${desc}</div></div>`;
+          html += `<input class="form-control input-contrast input-sm" type="text" id="${name}" name="inputs[${name}]" value="${dft}" />`;
+          html += `<a class="js-navigation-open Link--primary" title="${info}" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="#">使用说明：${desc}</a>`
+          html += `</div></div>`;
         } else {
         }
         return html;
@@ -307,7 +312,7 @@
             }
             body = JSON.stringify(body).replace(/\+/g, "%2b");
             var data =`title=${title}&body=${body}`;
-            window.location.href ="https://github.com/wjz304/Redpill_CustomBuild/issues/new?" + data;
+            window.location.href = "https://github.com/wjz304/Redpill_CustomBuild/issues/new?" + data;
           }
         );
       }
