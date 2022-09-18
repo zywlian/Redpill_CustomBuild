@@ -36,6 +36,7 @@ jobs:
           rm -f rp-ext_pocopico/ax88179_178a/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/dm9601/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/nct6775/releases/dva3221_42218.json
+          rm -f rp-ext_pocopico/sfc/releases/ds918p_25556.json
           rm -f rp-ext_pocopico/v9fs/releases/ds918p_42218.json
 
           sudo rm -rf rp-ext_wjz304
@@ -46,6 +47,7 @@ jobs:
           rm -f rp-ext_wjz304/ax88179_178a/releases/ds3617xs_42218.json
           rm -f rp-ext_wjz304/dm9601/releases/ds3617xs_42218.json
           rm -f rp-ext_wjz304/nct6775/releases/dva3221_42218.json
+          rm -f rp-ext_wjz304/sfc/releases/ds918p_25556.json
           rm -f rp-ext_wjz304/v9fs/releases/ds918p_42218.json
 
       - name: Get exts lsit
