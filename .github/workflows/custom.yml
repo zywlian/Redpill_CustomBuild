@@ -838,7 +838,8 @@ jobs:
             do
               echo "==> [${item}]"
               if [[ ${item} = -* ]]; then
-                [ -d ./custom/extensions ] && extname=$(ls ./custom/extensions | grep "${item:1}")
+                [ -d ./custom/extensions ] && extname=$(ls -A1 ./custom/extensions | grep "${item:1}" | head -n 1)
+                echo "==> [${extname}]"
                 if [ -n "${extname}" ]; then
                   echo "remove ${extname}"
                   ./ext-manager.sh remove "${extname}"
