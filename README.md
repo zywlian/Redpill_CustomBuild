@@ -76,7 +76,7 @@ jun              | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun
  `(PS: 在Issues上评论我可能看不到, 邮件太多了, 如长时间未回复请私信.)`  
 9. fork 本项目 Issues 和 Action 使用没有问题的.  
   但是快速创建的WEB页面由于 涉及 guthub 的 pages, 且含有CDN加速, 存在一些硬编码, 如要使用, 需要开通pages后修改创建issues的指向方可使用.  
-  (docs/Issues.html 文件中搜索 `"https://github.com/wjz304/Redpill_CustomBuild/issues/new?"` 替换为你的库.)  
+  (docs/Issues.html 文件中搜索 `var repo = "wjz304/Redpill_CustomBuild";` 替换为你的库.)  
 10. Web页 Title 后面的红色标签是可以点击的哦!(***PS：只有读到这里的人才会知道.***)  
 
 ## 举例
