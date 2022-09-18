@@ -100,9 +100,9 @@ jobs:
                                         suffix = '*'
                                         print('file: {} -- may not exists'.format(pathstrsub(data_index["releases"][key], reglist)))
                                     if key in exts.keys():
-                                        exts[key].append(extdir + suffix)
+                                        exts[key][extdir + suffix] = data_index["info"]["description"]
                                     else:
-                                        exts[key] = [ extdir + suffix ]
+                                        exts[key] = { extdir + suffix: data_index["info"]["description"]}
                 except Exception as err:
                     print(err)
                 return exts

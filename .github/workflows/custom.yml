@@ -397,7 +397,7 @@ jobs:
                         if dev == '1':
                             extskey = 'wjz304'
                         if extskey in extsjson and rpKey in extsjson[extskey]:
-                            rpExts = extsjson[extskey][rpKey]
+                            rpExts = list(extsjson[extskey][rpKey].keys())
                     extdels = [x.strip() for x in re.split(',| |\|', ext) if x.strip() != '' and x.strip().startswith('-')]
                     ext3rds = [x.strip() for x in re.split(',| |\|', ext) if x.strip() != '' and x.strip().startswith('http')]
                     extpocs = [x.strip() for x in re.split(',| |\|', ext) if x.strip() != '' and not x.strip().startswith('-') and not x.strip().startswith('http')]

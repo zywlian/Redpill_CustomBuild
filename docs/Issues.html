@@ -54,10 +54,16 @@
     <script type="application/javascript">
       var extbase = "";
       var dev = getUrlParam("dev");
+      var repo = "wjz304/Redpill_CustomBuild";
+      var cdn = "";
+      cdn = `https://raw.githubusercontent.com/${repo}/main/`;
+      //cdn = `https://fastly.jsdelivr.net/gh/${repo}@main/`;
+      //cdn = `https://gcore.jsdelivr.net/gh/${repo}@main/`;
+      //cdn = `https://cdn.staticaly.com/gh/${repo}/main/`;
 
-      if (! /AppleWebKit|Chrome|Safari|Edg/i.test(navigator.userAgent)) {
+      if (!/AppleWebKit|Chrome|Safari|Edg/i.test(navigator.userAgent)) {
         alert("请使用 Chrome / Edge / Safari 浏览器!");
-        window.location.href = "https://github.com/wjz304/Redpill_CustomBuild/";
+        window.location.href = `https://github.com/${repo}`;
       }
 
       function getUrlParam(paraName) {
@@ -91,23 +97,19 @@
       window.onload = function () {
         setLogo(dev);
         $("#titleLabel").on("click", changemode);
-
-        httpGetAsync(
-          "https://fastly.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/parameter.json",
-          function (result) {
-            result = JSON.parse(result);
-            $("#inputs").find("div").remove(); //html('');
-            var html = "";
-            for (var key in result) {
-              //console.log(key, result[key]);
-              html += createInput(result[key]);
-            }
-            $("#inputs").prepend(html);
-
-            $("#platform").on("change", changePlatform);
-            changePlatform();
+        httpGetAsync(cdn + "parameter.json", function (result) {
+          result = JSON.parse(result);
+          $("#inputs").find("div").remove(); //html('');
+          var html = "";
+          for (var key in result) {
+            //console.log(key, result[key]);
+            html += createInput(result[key]);
           }
-        );
+          $("#inputs").prepend(html);
+
+          $("#platform").on("change", changePlatform);
+          changePlatform();
+        });
       };
 
       function setLogo(dev) {
@@ -157,14 +159,14 @@
             html += `<option ${addpar} value="${opts[v]}">${opts[v]}</option>`;
           }
           html += `</select>`;
-          html += `<a class="js-navigation-open Link--primary" title="${info}" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="#">使用说明：${desc}</a>`
+          html += `<a class="js-navigation-open Link--primary" title="${info}" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="#">使用说明：${desc}</a>`;
           html += `</div></div>`;
         } else if (type == "string") {
           var par = "";
           if (req) par = '"required"';
           html += `<div class="form-group mt-1 mb-2 ${par} "><div class="form-group-header"><label class="color-fg-default text-mono f6" for="${name}">${name}</label></div><div class="form-group-body">`;
           html += `<input class="form-control input-contrast input-sm" type="text" id="${name}" name="inputs[${name}]" value="${dft}" />`;
-          html += `<a class="js-navigation-open Link--primary" title="${info}" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="#">使用说明：${desc}</a>`
+          html += `<a class="js-navigation-open Link--primary" title="${info}" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="#">使用说明：${desc}</a>`;
           html += `</div></div>`;
         } else {
         }
@@ -172,20 +174,20 @@
       }
 
       function changePlatform() {
-        httpGetAsync("https://fastly.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/loads.json", function (result) {
+        httpGetAsync(cdn + "loads.json", function (result) {
           result = JSON.parse(result);
           var xreleases = result["pocopico_develop"][$("#platform").val()];
           var isselect = false;
           for (var i = 0; i < $("#version")[0].options.length; i++) {
-              if (xreleases.includes($("#version")[0].options[i].value)) {
-                $("#version")[0].options[i].style.display = "block";
-                if (!isselect){
-                  $("#version")[0].options[i].selected = true;
-                  isselect = true;
-                }
-              } else {
-                $("#version")[0].options[i].style.display = "none";
+            if (xreleases.includes($("#version")[0].options[i].value)) {
+              $("#version")[0].options[i].style.display = "block";
+              if (!isselect) {
+                $("#version")[0].options[i].selected = true;
+                isselect = true;
               }
+            } else {
+              $("#version")[0].options[i].style.display = "none";
+            }
           }
           $("#version").on("change", changeversion);
           changeversion();
@@ -193,14 +195,19 @@
       }
 
       function changeversion() {
-        httpGetAsync("https://fastly.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/loads.json", function (result) {
+        httpGetAsync(cdn + "loads.json", function (result) {
           result = JSON.parse(result);
           var xreleases = result["jumkey_develop"][$("#platform").val()];
           var isselect = false;
 
           for (var i = 0; i < $("#exp")[0].options.length; i++) {
             if ($("#exp")[0].options[i].value == "jumkey") {
-              if (result["jumkey_develop"].hasOwnProperty($("#platform").val()) && result["jumkey_develop"][$("#platform").val()].includes($("#version").val())) {
+              if (
+                result["jumkey_develop"].hasOwnProperty($("#platform").val()) &&
+                result["jumkey_develop"][$("#platform").val()].includes(
+                  $("#version").val()
+                )
+              ) {
                 $("#exp")[0].options[i].style.display = "block";
                 $("#exp")[0].options[i].selected = true;
               } else {
@@ -227,10 +234,8 @@
       function createExtBtn() {
         platform = $("#platform").val().replace("+", "p").toLowerCase();
         version = $("#version").val().split("-").at(-1);
-        var exts = [];
-        var extsurl =
-          "https://fastly.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/exts.json";
-        httpGetAsync(extsurl, function (result) {
+        var exts = {};
+        httpGetAsync(cdn + "exts.json", function (result) {
           result = JSON.parse(result);
           extskey = "pocopico";
           if (dev == "1") extskey = "wjz304";
@@ -238,26 +243,33 @@
             exts = result[extskey][platform + "_" + version];
           var html = "";
           let idx = 1;
-          if (exts.length > 0) {
+          if (Object.keys(exts).length > 0) {
             html +=
               '<span class="pl-mi1">点击驱动名添加/删除 (* 结尾的为无效驱动, # 结尾的为sha256错误驱动, */# 强制添加将编译失败.) </span><br />';
             html +=
-              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-virtio" onclick="return processext(\'-virtio\')" autofocus="" >-virtio</button>&nbsp;';
+              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-virtio" onclick="return processext(\'-virtio\')" autofocus="" title="Adds VirtIO support for fast network/PCI/SCSI/network/console paravirtualization under QEmu (Proxmox, VirtualBox, virsh, and similar)">-virtio</button>&nbsp;';
             html +=
-              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-acpid2" onclick="return processext(\'-acpid2\')" autofocus="" >-acpid2</button>&nbsp;';
+              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-acpid2" onclick="return processext(\'-acpid2\')" autofocus="" title="ACPI Daemon v2 that handles power button events">-acpid2</button>&nbsp;';
             html +=
-              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-misc" onclick="return processext(\'-misc\')" autofocus="" >-misc</button>&nbsp;';
+              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-misc" onclick="return processext(\'-misc\')" autofocus="" title="Misc shell">-misc</button>&nbsp;';
             html +=
-              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-boot-wait" disabled="true" onclick="return processext(\'-boot-wait\')" autofocus="" >-boot-wait</button>&nbsp;';
+              '<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_-boot-wait" disabled="true" onclick="return processext(\'-boot-wait\')" autofocus="" title="Simple extension which stops the execution early waiting for the boot device to appear">-boot-wait</button>&nbsp;';
             html +=
               '<span class="pl-md">(注意: boot-wait, misc, acpid2, virtio 默认会进行判断添加, 此处以"-" 开头代表删除, 无特殊需求请勿删!!!.)</span><br />';
           }
-          for (var i in exts) {
+          for (var ext in exts) {
             var par = "";
-            if (exts[i].endsWith("*") || exts[i].endsWith("#"))
+            if (ext.endsWith("*") || ext.endsWith("#"))
               par = 'disabled="false"';
 
-            html += `<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_${exts[i].replace(/\./g, "·").replace(/[\*|\#]/g,"")}" ${par} onclick="return processext('${exts[i]}')" autofocus="" title="优化中...">${exts[i]}</button>&nbsp;`;
+            html += `<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_${ext
+              .replace(/\./g, "·")
+              .replace(
+                /[\*|\#]/g,
+                ""
+              )}" ${par} onclick="return processext('${ext}')" autofocus="" title="${
+              exts[ext]
+            }">${ext}</button>&nbsp;`;
             if (idx++ % 15 == 0) html += "<br />";
           }
           $("#ext").prop("readonly", true);
@@ -297,29 +309,25 @@
         var title = "Custom";
         var body = {};
 
-        httpGetAsync(
-          "https://fastly.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/parameter.json",
-          function (result) {
-            result = JSON.parse(result);
-            for (var key in result) {
-              var name = result[key]["name"];
-              if (name == "title") {
-                if (formData.get(`inputs[${name}]`)) {
-                  title += " " + formData.get(`inputs[${name}]`);
-                } else {
-                  title += " " + new Date().toISOString().substr(0, 10);
-                }
-                continue;
-              }
+        httpGetAsync(cdn + "parameter.json", function (result) {
+          result = JSON.parse(result);
+          for (var key in result) {
+            var name = result[key]["name"];
+            if (name == "title") {
               if (formData.get(`inputs[${name}]`)) {
-                body[name] = formData.get(`inputs[${name}]`);
+                title += " " + formData.get(`inputs[${name}]`);
+              } else {
+                title += " " + new Date().toISOString().substr(0, 10);
               }
+              continue;
             }
-            body = JSON.stringify(body).replace(/\+/g, "%2b");
-            var data = `title=${title}&body=${body}`;
-            window.location.href = "https://github.com/wjz304/Redpill_CustomBuild/issues/new?" + data;
+            if (formData.get(`inputs[${name}]`)) {
+              body[name] = formData.get(`inputs[${name}]`);
+            }
           }
-        );
+          body = JSON.stringify(body).replace(/\+/g, "%2b");
+          window.location.href = `https://github.com/${repo}/issues/new?title=${title}&body=${body}`;
+        });
       }
     </script>
 
@@ -435,30 +443,27 @@
       ></div>
       <!-- <script src="https://fastly.jsdelivr.net/npm/marked/marked.min.js"></script> -->
       <script>
-        httpGetAsync(
-          "https://fastly.jsdelivr.net/gh/wjz304/Redpill_CustomBuild@main/tips.md",
-          function (result) {
-            // var html = marked.parse(result).replace('<pre>', "<pre>\n");
-            // 引入的文件就是一段md格式的代码，这里就直接解析一下算了
-            var html = result.replace(/\`+[^\n]*\n/g, "");
-            html = html.split("\n");
-            // html = html.splice(1, html.length-2);
-            var css = "";
-            for (var i in html) {
-              css = "";
-              if (html[i].substr(0, 1) == "-") {
-                css = "pl-md";
-              } else {
-                css = "pl-mi1";
-              }
-              if (css) {
-                html[i] = '<span class="' + css + '">' + html[i] + "</span>";
-              }
+        httpGetAsync(cdn + "tips.md", function (result) {
+          // var html = marked.parse(result).replace('<pre>', "<pre>\n");
+          // 引入的文件就是一段md格式的代码，这里就直接解析一下算了
+          var html = result.replace(/\`+[^\n]*\n/g, "");
+          html = html.split("\n");
+          // html = html.splice(1, html.length-2);
+          var css = "";
+          for (var i in html) {
+            css = "";
+            if (html[i].substr(0, 1) == "-") {
+              css = "pl-md";
+            } else {
+              css = "pl-mi1";
             }
-            html = "<pre>" + html.join("\n") + "</pre>";
-            $(".highlight.highlight-source-diff").html(html);
+            if (css) {
+              html[i] = '<span class="' + css + '">' + html[i] + "</span>";
+            }
           }
-        );
+          html = "<pre>" + html.join("\n") + "</pre>";
+          $(".highlight.highlight-source-diff").html(html);
+        });
       </script>
     </div>
     <footer
