@@ -325,6 +325,7 @@
               body[name] = formData.get(`inputs[${name}]`);
             }
           }
+          if (dev == "1") body["dev"] = "1";
           body = JSON.stringify(body).replace(/\+/g, "%2b");
           window.location.href = `https://github.com/${repo}/issues/new?title=${title}&body=${body}`;
         });
