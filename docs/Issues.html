@@ -220,10 +220,10 @@
             if ($("#jun")[0].options[i].value == "1") {
               if (["7.0.1-42218"].includes($("#version").val())) {
                 $("#jun")[0].options[i].style.display = "block";
-                $("#exp")[0].options[i].selected = true;
+                $("#jun")[0].options[i].selected = true;
               } else {
                 $("#jun")[0].options[i].style.display = "none";
-                $("#exp")[0].options[i].selected = false;
+                $("#jun")[0].options[i].selected = false;
               }
             }
           }
@@ -261,7 +261,6 @@
             var par = "";
             if (ext.endsWith("*") || ext.endsWith("#"))
               par = 'disabled="false"';
-
             html += `<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_${ext
               .replace(/\./g, "·")
               .replace(
