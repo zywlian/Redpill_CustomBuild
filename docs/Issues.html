@@ -55,7 +55,7 @@
       var extbase = "";
       var dev = getUrlParam("dev");
 
-      if (/AppleWebKit|Chrome|Safari|Edg/i.test(navigator.userAgent)) {
+      if (! /AppleWebKit|Chrome|Safari|Edg/i.test(navigator.userAgent)) {
         alert("请使用 Chrome / Edge / Safari 浏览器!");
         window.location.href = "https://github.com/wjz304/Redpill_CustomBuild/";
       }
