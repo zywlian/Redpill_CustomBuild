@@ -50,10 +50,15 @@
       }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="application/javascript">
 
+    <script type="application/javascript">
       var extbase = "";
       var dev = getUrlParam("dev");
+
+      if (/AppleWebKit|Chrome|Safari|Edg/i.test(navigator.userAgent)) {
+        alert("请使用 Chrome / Edge / Safari 浏览器!");
+        window.location.href = "https://github.com/wjz304/Redpill_CustomBuild/";
+      }
 
       function getUrlParam(paraName) {
         var url = document.location.toString();
@@ -94,7 +99,7 @@
             $("#inputs").find("div").remove(); //html('');
             var html = "";
             for (var key in result) {
-              console.log(key, result[key]);
+              //console.log(key, result[key]);
               html += createInput(result[key]);
             }
             $("#inputs").prepend(html);
@@ -252,7 +257,7 @@
             if (exts[i].endsWith("*") || exts[i].endsWith("#"))
               par = 'disabled="false"';
 
-            html += `<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_${exts[i].replace(/\./g, "·").replace(/[\*|\#]/g,"")}" ${par} onclick="return processext('${exts[i]}')" autofocus="" >${exts[i]}</button>&nbsp;`;
+            html += `<button type="button" class="btn btn-primary btn-sm mt-2" id="ext_btn_${exts[i].replace(/\./g, "·").replace(/[\*|\#]/g,"")}" ${par} onclick="return processext('${exts[i]}')" autofocus="" title="优化中...">${exts[i]}</button>&nbsp;`;
             if (idx++ % 15 == 0) html += "<br />";
           }
           $("#ext").prop("readonly", true);
@@ -311,7 +316,7 @@
               }
             }
             body = JSON.stringify(body).replace(/\+/g, "%2b");
-            var data =`title=${title}&body=${body}`;
+            var data = `title=${title}&body=${body}`;
             window.location.href = "https://github.com/wjz304/Redpill_CustomBuild/issues/new?" + data;
           }
         );
