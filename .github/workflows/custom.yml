@@ -836,17 +836,20 @@ jobs:
             exts=(${ext//,/ })
             for item in ${exts[@]}
             do
+              echo "==> [${item}]"
               if [[ ${item} = -* ]]; then
-                extname=$(ls ./custom/extensions | grep "${item:1}")
-                echo "find [${extname}] by ${item:1}"
+                [ -d ./custom/extensions ] && extname=$(ls ./custom/extensions | grep "${item:1}")
                 if [ -n "${extname}" ]; then
+                  echo "remove ${extname}"
                   ./ext-manager.sh remove "${extname}"
                 else
                   echo "默认就没有 ${item:1}"
                 fi
               elif [[ ${item} = http* ]]; then
+                echo "add ${item}"
                 ./ext-manager.sh add "${item}"
               else
+                echo "add ${rpext}/${item}/rpext-index.json"
                 ./ext-manager.sh add "${rpext}/${item}/rpext-index.json"
               fi
             done
