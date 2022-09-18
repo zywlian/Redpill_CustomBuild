@@ -838,6 +838,7 @@ jobs:
             do
               if [[ ${item} = -* ]]; then
                 extname=$(ls ./custom/extensions | grep "${item:1}")
+                echo "find [${extname}] by ${item:1}"
                 if [ -n "${extname}" ]; then
                   ./ext-manager.sh remove "${extname}"
                 else
