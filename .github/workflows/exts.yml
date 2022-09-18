@@ -37,8 +37,8 @@ jobs:
           sudo rm -rf rp-ext_wjz304
           git clone https://github.com/wjz304/rp-ext rp-ext_wjz304
           # 容错
-          rm -rf rp-ext_pocopico/eudev
-          rm -f rp-ext_pocopico/v9fs/releases/ds918p_42218.json
+          rm -rf rp-ext_wjz304/eudev
+          rm -f rp-ext_wjz304/v9fs/releases/ds918p_42218.json
 
       - name: Get exts lsit
         uses: jannekem/run-python-script-action@v1.2
