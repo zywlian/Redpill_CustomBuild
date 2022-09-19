@@ -50,12 +50,15 @@
       }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
+    <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
+    <!-- <script src="https://fastly.jsdelivr.net/npm/marked/marked.min.js"></script> -->
     <script type="application/javascript">
       var extbase = "";
-      var dev = getUrlParam("dev");
+      var dev = "0";
       var repo = "wjz304/Redpill_CustomBuild";
       var cdn = "";
+
+      dev = getUrlParam("dev");
       cdn = `https://raw.githubusercontent.com/${repo}/main/`;
       //cdn = `https://fastly.jsdelivr.net/gh/${repo}@main/`;
       //cdn = `https://gcore.jsdelivr.net/gh/${repo}@main/`;
@@ -91,6 +94,7 @@
 
       window.onload = function () {
         setLogo(dev);
+        //setTips();
         $("#titleLabel").on("click", changemode);
         httpGetAsync(cdn + "parameter.json", function (result) {
           result = JSON.parse(result);
@@ -117,6 +121,30 @@
           $($("#logoP"))[0].style.display = "block";
           $($("#logoD"))[0].style.display = "none";
         }
+      }
+
+      function setTips() {
+        httpGetAsync(cdn + "tips.md", function (result) {
+          // var html = marked.parse(result).replace('<pre>', "<pre>\n");
+          // 引入的文件就是一段md格式的代码，这里就直接解析一下算了
+          var html = result.replace(/\`+[^\n]*\n/g, "");
+          html = html.split("\n");
+          // html = html.splice(1, html.length-2);
+          var css = "";
+          for (var i in html) {
+            css = "";
+            if (html[i].substr(0, 1) == "-") {
+              css = "pl-md";
+            } else {
+              css = "pl-mi1";
+            }
+            if (css) {
+              html[i] = '<span class="' + css + '">' + html[i] + "</span>";
+            }
+          }
+          html = "<pre>" + html.join("\n") + "</pre>";
+          $(".highlight.highlight-source-diff").html(html);
+        });
       }
 
       function changemode() {
@@ -436,30 +464,6 @@
         id="content"
         class="highlight highlight-source-diff notranslate position-relative overflow-auto"
       ></div>
-      <!-- <script src="https://fastly.jsdelivr.net/npm/marked/marked.min.js"></script> -->
-      <script>
-        httpGetAsync(cdn + "tips.md", function (result) {
-          // var html = marked.parse(result).replace('<pre>', "<pre>\n");
-          // 引入的文件就是一段md格式的代码，这里就直接解析一下算了
-          var html = result.replace(/\`+[^\n]*\n/g, "");
-          html = html.split("\n");
-          // html = html.splice(1, html.length-2);
-          var css = "";
-          for (var i in html) {
-            css = "";
-            if (html[i].substr(0, 1) == "-") {
-              css = "pl-md";
-            } else {
-              css = "pl-mi1";
-            }
-            if (css) {
-              html[i] = '<span class="' + css + '">' + html[i] + "</span>";
-            }
-          }
-          html = "<pre>" + html.join("\n") + "</pre>";
-          $(".highlight.highlight-source-diff").html(html);
-        });
-      </script>
     </div>
     <footer
       class="footer width-full container-xl mt-3 text-center color-fg-muted"
