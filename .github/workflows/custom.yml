@@ -949,7 +949,9 @@ jobs:
             您自定义的 Redpill 已构建完成. 请前往下面的 URL 下载.  
             > ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  
             ----  
-            PS: 在Issues下评论 "transfer" 附件转快传 🚲->🏍. (请勿重复发, 操作时间 ≈ 成功个数 X 3分钟).  
+            PS:  
+            在Issues下评论 "transfer" 附件转快传 🚲->🏍. (请勿重复发, 操作时间 ≈ 成功个数 X 3分钟). 
+            在Issues下评论 "delete builds" 即可删该Issues的所有历史编译记录.
             >  
             ----  
           emoji: hooray
@@ -974,6 +976,10 @@ jobs:
             您自定义的 Redpill 构建失败. 请前往下面的 URL 查看详细信息对body进行修改并请重新触发编译(Close & Reopen).  
             > ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  
             ----
+            PS:  
+            在Issues下评论 "delete builds" 即可删该Issues的所有历史编译记录.
+            >  
+            ----  
           emoji: confused
 
       - name: Warning Download comment
