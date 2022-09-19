@@ -61,11 +61,6 @@
       //cdn = `https://gcore.jsdelivr.net/gh/${repo}@main/`;
       //cdn = `https://cdn.staticaly.com/gh/${repo}/main/`;
 
-      if (!/AppleWebKit|Chrome|Safari|Edg/i.test(navigator.userAgent)) {
-        alert("请使用 Chrome / Edge / Safari 浏览器!");
-        window.location.href = `https://github.com/${repo}`;
-      }
-
       function getUrlParam(paraName) {
         var url = document.location.toString();
         var arrObj = url.split("?");
@@ -233,7 +228,7 @@
 
       function createExtBtn() {
         platform = $("#platform").val().replace("+", "p").toLowerCase();
-        version = $("#version").val().split("-").at(-1);
+        version = $("#version").val().split("-")[1];
         var exts = {};
         httpGetAsync(cdn + "exts.json", function (result) {
           result = JSON.parse(result);
