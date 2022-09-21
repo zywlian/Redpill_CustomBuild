@@ -69,7 +69,7 @@ jun              | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun
 2. 构建失败 后请调整参数重新创建Issues发起重新构建, 或者修改body后 Close Issue + Reopen 重新触发.（触发编译：open, reopen）. 
 3. 再次构建, 直接 reopen 会再次触发构建. 
 4. 每日构建, 打上'schedule' [【👉标签说明】](https://github.com/wjz304/Redpill_CustomBuild/blob/main/guide/Issues.md#issues-%E6%AF%8F%E6%97%A5%E5%BE%AA%E7%8E%AF%E6%9E%84%E5%BB%BA%E6%95%99%E7%A8%8B)标签 将会每日构建(通过Reopen的方式, 因此如果构建失败Issues没有Closed 将终止).  
-5. 驱动的选择请参考[【👉驱动列表】](https://xpenology.com/forum/topic/4980-gt-hardware-supported-list-for-dsm-52-lt/).     
+5. 驱动的选择请参考[【👉驱动列表】](./drivers.md).     
 6. 根据github官方说明所有的编译结果保留90天，周知.
 7. 如果没有魔法, 附件下载不下来, 请在 Issue 中回复 'transfer' 使用快传, 或者参考 https://github.com/wjz304/hosts 设置 hosts.
 8. [【👉问题反馈】](https://github.com/wjz304/Redpill_CustomBuild/issues/807)  交流群 QQ群: [21609194](https://qm.qq.com/cgi-bin/qm/qr?k=8AU8VJ82OR2HB_77g3vsjGKA-rm-p67B&jump_from=webapi)  TG: [https://t.me/Redpill_CustomBuild](https://t.me/Redpill_CustomBuild)  
