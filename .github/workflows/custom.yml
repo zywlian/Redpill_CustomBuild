@@ -764,6 +764,7 @@ jobs:
             sed -i "s/e39890f4bef2e5e4eea956996b0dd92d081c6d9e7c393331131e65bbad1a17a9/f7dd1317f24ec6b9bac839e37f66b59030218c7f97c06f73f1f54ed0f892c4aa/g" redpill-load/config/DS920+/7.0.1-42218/config.json
             sed -i "s/84e5e1a238e73ffe2ccf08d51e3f9ad13385fcdcac18163678de3f6ad1447bc4/6494b4c4789ed887ddfaf0fe0e45e100cfcc4ec719b7f3ab6bcc26b05e97c829/g" redpill-load/config/DS920+/7.0.1-42218/config.json
             sed -i "s/8e6da6c3c9259d23ee5cae3c71691a75b0a281551d19cb7.1.1df469c7524e72/8e6da6c3c9259d23ee5cae3c71691a75b0a281551d19cb75041df469c7524e72/g" redpill-load/config/DS3617xs/7.1.1-42962/config.json
+            sed -i "s|v7.1.0/ramdisk-001-disable-root-pwd.patch|ramdisk-001-disable-root-pwd.patch|g" redpill-load/config/DS3617xs/7.1.1-42661/config.json
             sed -i "s/v7.7.1/v7.1.1/g" redpill-load/config/DS3617xs/7.1.1-42951/config.json
             sed -i "s/v7.7.1/v7.1.1/g" redpill-load/config/DS3617xs/7.1.1-42962/config.json
             sed -i "s/ramdisk-003-post-init-script.patch/ramdisk-003-post-init-script-noatime.patch/g" redpill-load/config/DS3615xs/7.1.1-42962/config.json
