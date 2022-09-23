@@ -486,33 +486,33 @@ jobs:
 
       - name: Echo Build Info
         run: |
-          echo issues:            "${{ steps.info.outputs.issues }}"
-          echo iscustom:          "${{ steps.info.outputs.iscustom }}"
-          echo errinfo:           "${{ steps.info.outputs.errinfo }}"
-          echo warinfo:           "${{ steps.info.outputs.warinfo }}"
+          echo issues:            '${{ steps.info.outputs.issues }}'
+          echo iscustom:          '${{ steps.info.outputs.iscustom }}'
+          echo errinfo:           '${{ steps.info.outputs.errinfo }}'
+          echo warinfo:           '${{ steps.info.outputs.warinfo }}'
 
-          echo platform:          "${{ steps.info.outputs.platform }}"
-          echo version:           "${{ steps.info.outputs.version }}"
-          echo config:            "${{ steps.info.outputs.config }}"
+          echo platform:          '${{ steps.info.outputs.platform }}'
+          echo version:           '${{ steps.info.outputs.version }}'
+          echo config:            '${{ steps.info.outputs.config }}'
 
-          echo maxdisks:          "${{ steps.info.outputs.maxdisks }}"
-          echo maxlanport:        "${{ steps.info.outputs.maxlanport }}"
-          echo internalportcfg:   "${{ steps.info.outputs.internalportcfg }}"
-          echo esataportcfg:      "${{ steps.info.outputs.esataportcfg }}"
-          echo usbportcfg:        "${{ steps.info.outputs.usbportcfg }}"
-          echo sn:                "${{ steps.info.outputs.sn }}"
-          echo mac:               "${{ steps.info.outputs.mac }}"
-          echo netif_num:         "${{ steps.info.outputs.netif_num }}"
-          echo vid:               "${{ steps.info.outputs.vid }}"
-          echo pid:               "${{ steps.info.outputs.pid }}"
-          echo diskidxmap:        "${{ steps.info.outputs.diskidxmap }}"
-          echo sataportmap:       "${{ steps.info.outputs.sataportmap }}"
-          echo sasidxmap:         "${{ steps.info.outputs.sasidxmap }}"
-          echo dtb:               "${{ steps.info.outputs.dtb }}"
-          echo ext:               "${{ steps.info.outputs.ext }}"
-          echo exp:               "${{ steps.info.outputs.exp }}"
-          echo jun:               "${{ steps.info.outputs.jun }}"
-          echo dev:               "${{ steps.info.outputs.dev }}"
+          echo maxdisks:          '${{ steps.info.outputs.maxdisks }}'
+          echo maxlanport:        '${{ steps.info.outputs.maxlanport }}'
+          echo internalportcfg:   '${{ steps.info.outputs.internalportcfg }}'
+          echo esataportcfg:      '${{ steps.info.outputs.esataportcfg }}'
+          echo usbportcfg:        '${{ steps.info.outputs.usbportcfg }}'
+          echo sn:                '${{ steps.info.outputs.sn }}'
+          echo mac:               '${{ steps.info.outputs.mac }}'
+          echo netif_num:         '${{ steps.info.outputs.netif_num }}'
+          echo vid:               '${{ steps.info.outputs.vid }}'
+          echo pid:               '${{ steps.info.outputs.pid }}'
+          echo diskidxmap:        '${{ steps.info.outputs.diskidxmap }}'
+          echo sataportmap:       '${{ steps.info.outputs.sataportmap }}'
+          echo sasidxmap:         '${{ steps.info.outputs.sasidxmap }}'
+          echo dtb:               '${{ steps.info.outputs.dtb }}'
+          echo ext:               '${{ steps.info.outputs.ext }}'
+          echo exp:               '${{ steps.info.outputs.exp }}'
+          echo jun:               '${{ steps.info.outputs.jun }}'
+          echo dev:               '${{ steps.info.outputs.dev }}'
 
       - name: Add Issues labels
         if: steps.info.outputs.issues == 'true' && steps.info.outputs.iscustom == 'true'
