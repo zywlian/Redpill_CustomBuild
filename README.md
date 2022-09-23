@@ -15,6 +15,7 @@
 > 托管于 GitHub 服务器, 只要 GitHub 不宕机, 它就不受影响(Private 项目每月有 2000 次的限制, Public 项目无限制).
 
 ## 链接
+***如果没有魔法，请参考 https://github.com/wjz304/hosts 设置hosts***  
 ***请使用 Chromium 内核浏览器 (Chrome / Edge / 360极速 ...)***  
 [【👉快速创建】](https://wjz304.github.io/Redpill_CustomBuild/Issues.html)  
 [【👉快速创建】(dev)](https://wjz304.github.io/Redpill_CustomBuild/Issues.html?dev=1)  
