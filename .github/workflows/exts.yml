@@ -35,6 +35,7 @@ jobs:
           rm -f rp-ext_pocopico/asix/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/ax88179_178a/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/dm9601/releases/ds3617xs_42218.json
+          rm -f rp-ext_pocopico/mpt2sas/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/nct6775/releases/dva3221_42218.json
           rm -f rp-ext_pocopico/sfc/releases/ds918p_25556.json
           rm -f rp-ext_pocopico/v9fs/releases/ds918p_42218.json
