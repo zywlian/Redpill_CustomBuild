@@ -206,7 +206,7 @@ jobs:
                     iscustom = 'false'
                     errinfo = 'body 错误, 不符合JSON规范 {}.'.format(e)
 
-                platforms = ['DS918+', 'DS920+', 'DS1621+', 'DS3615xs', 'DS3617xs', 'DS3622xs+', 'DVA1622', 'DVA3221']
+                platforms = ['DS918+', 'DS920+', 'DS1621+', 'DS2422+', 'DS3615xs', 'DS3617xs', 'DS3622xs+', 'DVA1622', 'DVA3221', 'RS4021xs+']
                 if iscustom == 'true' and not platform in platforms:
                     iscustom = 'false'
                     errinfo = 'platform 参数错误, 当前仅支持 {}.'.format(', '.join(platforms))
@@ -598,11 +598,14 @@ jobs:
                     except ModuleNotFoundError:
                         os.system('pip3 install wget')
                         import wget
-                    res = wget.download('https://raw.githubusercontent.com/pocopico/tinycore-redpill/stable/serialnumbergen.sh', out='serialnumbergen.sh')
+                    res = wget.download('https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/serialnumbergen.sh', out='serialnumbergen.sh')
                     os.system('sed -i "s|DS3622xsp|DS3622xs+|g" serialnumbergen.sh')
                     os.system('sed -i "s|echo.*\$(generateMacAddress)|echo \$(generateMacAddress)|g" serialnumbergen.sh')
                     os.system('sed -i "s|echo.*\$(generateSerial \$1)|echo \$(generateSerial \$1)|g" serialnumbergen.sh')
-                    dat = os.popen('bash ./serialnumbergen.sh ${{ steps.info.outputs.platform }}').readlines()
+                    platform = '${{ steps.info.outputs.platform }}'
+                    if platform == 'DS2422+': platform = 'DS3622xs+'     # 当前不支持 DS2422+ 算号
+                    if platform == 'RS4021xs+': platform = 'DS3622xs+'   # 当前不支持 RS4021xs+ 算号
+                    dat = os.popen('bash ./serialnumbergen.sh {}'.format(platform)).readlines()
 
                 if '${{ steps.info.outputs.config }}' != '':
                     inconfig = json.loads('${{ steps.info.outputs.config }}')
@@ -778,7 +781,7 @@ jobs:
           cd redpill-load
           platform=${{ steps.info.outputs.platform }}
           version=${{ steps.info.outputs.version }}
-          synoplatform=$(echo ${platform} | sed 's/DS/ds/g; s/DVA/dva/g; s/+/p/g')       # DS3622xs+ => ds3622xsp
+          synoplatform=$(echo ${platform,,} | sed 's/+/p/g')                             # DS3622xs+ => ds3622xsp
           synoversion=$(echo ${version} | awk -F - '{print $2}')                         # 7.0.1-42218 => 42218
           setsynoarch ${platform}
 
