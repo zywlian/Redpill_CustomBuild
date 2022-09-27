@@ -31,7 +31,6 @@ jobs:
           sudo rm -rf rp-ext_pocopico
           git clone https://github.com/pocopico/rp-ext rp-ext_pocopico
           # 容错
-          rm -rf rp-ext_pocopico/eudev
           rm -f rp-ext_pocopico/asix/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/ax88179_178a/releases/ds3617xs_42218.json
           rm -f rp-ext_pocopico/dm9601/releases/ds3617xs_42218.json
@@ -43,7 +42,6 @@ jobs:
           sudo rm -rf rp-ext_wjz304
           git clone https://github.com/wjz304/rp-ext rp-ext_wjz304
           # 容错
-          rm -rf rp-ext_wjz304/eudev
           rm -f rp-ext_wjz304/asix/releases/ds3617xs_42218.json
           rm -f rp-ext_wjz304/ax88179_178a/releases/ds3617xs_42218.json
           rm -f rp-ext_wjz304/dm9601/releases/ds3617xs_42218.json
@@ -100,25 +98,28 @@ jobs:
                         if os.path.isdir(os.path.join(root, work, extdir)):
                             data_index = getjsonfile(os.path.join(root, work, extdir, jext))
                             if data_index != None:
-                                keys = data_index["releases"].keys()
-                                for key in keys:
-                                    suffix = ''
-                                    data_releases = getjsonfile(os.path.join(root, work, pathstrsub(data_index["releases"][key], reglist)))
-                                    if data_releases != None:
-                                        if "files" in data_releases:
-                                            for file in data_releases["files"]:
-                                                sha256_online = file["sha256"]
-                                                sha256_local = sha256sum(os.path.join(root, work, pathstrsub( file["url"], reglist)))
-                                                if sha256_online != sha256_local:
-                                                    suffix = '#'
-                                                    print('file: {} -- key: {} -- error: {} -- really: {}'.format(pathstrsub(data_index["releases"][key], reglist), pathstrsub(file["url"], reglist), sha256_online, sha256_local))
-                                    else:
-                                        suffix = '*'
-                                        print('file: {} -- may not exists'.format(pathstrsub(data_index["releases"][key], reglist)))
-                                    if key in exts.keys():
-                                        exts[key][extdir + suffix] = data_index["info"]["description"]
-                                    else:
-                                        exts[key] = { extdir + suffix: data_index["info"]["description"]}
+                                try:
+                                    keys = data_index["releases"].keys()
+                                    for key in keys:
+                                        suffix = ''
+                                        data_releases = getjsonfile(os.path.join(root, work, pathstrsub(data_index["releases"][key], reglist)))
+                                        if data_releases != None:
+                                            if "files" in data_releases:
+                                                for file in data_releases["files"]:
+                                                    sha256_online = file["sha256"]
+                                                    sha256_local = sha256sum(os.path.join(root, work, pathstrsub( file["url"], reglist)))
+                                                    if sha256_online != sha256_local:
+                                                        suffix = '#'
+                                                        print('file: {} -- key: {} -- error: {} -- really: {}'.format(pathstrsub(data_index["releases"][key], reglist), pathstrsub(file["url"], reglist), sha256_online, sha256_local))
+                                        else:
+                                            suffix = '*'
+                                            print('file: {} -- may not exists'.format(pathstrsub(data_index["releases"][key], reglist)))
+                                        if key in exts.keys():
+                                            exts[key][extdir + suffix] = data_index["info"]["description"]
+                                        else:
+                                            exts[key] = { extdir + suffix: data_index["info"]["description"]}
+                                except Exception as err:
+                                    print(err)
                 except Exception as err:
                     print(err)
                 return exts
