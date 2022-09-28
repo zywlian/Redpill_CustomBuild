@@ -67,7 +67,7 @@
     },
     "internalportcfg": {
         "name": "internalportcfg",
-        "description": "如不了解请保持默认, 请输入 sata 接口配置(十六进制数). 默认: 0xffff",
+        "description": "如不了解请保持默认, 请输入 sata 接口配置 internalportcfg(十六进制数). 默认: 0xffff",
         "detailedinfo": "以上数值为16进制, 将其转换为2进制进行理解.\n群晖内使用“1”表示存在这个接口, “0”表示不存在这个接口.\n 0xffff 转为2进制为“1111,1111”, 即 1-8 号硬盘为内部sata硬盘\n与esataportcfg和usbportcfg不应该出现重复.",
         "required": false,
         "default": "0xffff",
@@ -75,7 +75,7 @@
     },
     "esataportcfg": {
         "name": "esataportcfg",
-        "description": "如不了解请保持默认, 请输入 esata 接口配置(十六进制数). 默认: 无",
+        "description": "如不了解请保持默认, 请输入 esata 接口配置 esataportcfg(十六进制数). 默认: 无",
         "detailedinfo": "以上数值为16进制, 将其转换为2进制进行理解.\n群晖内使用“1”表示存在这个接口, “0”表示不存在这个接口.\n 0xf000 转为2进制为“1100,0000”, 即 7-8 号硬盘为内部esata硬盘\n与internalportcfg和usbportcfg不应该出现重复.",
         "required": false,
         "default": "",
@@ -83,7 +83,7 @@
     },
     "usbportcfg": {
         "name": "usbportcfg",
-        "description": "如不了解请保持默认, 请输入 usbportcfg(十六进制数). 默认: 无",
+        "description": "如不了解请保持默认, 请输入 usb 接口配置 usbportcfg(十六进制数). 默认: 无",
         "detailedinfo": "以上数值为16进制, 将其转换为2进制进行理解.\n群晖内使用“1”表示存在这个接口, “0”表示不存在这个接口.\n 0xf0 转为2进制为“1100”, 即 3-4 号硬盘为usb硬盘\n与internalportcfg和esataportcfg不应该出现重复.",
         "required": false,
         "default": "",
@@ -131,7 +131,7 @@
     },
     "diskidxmap": {
         "name": "diskidxmap",
-        "description": "【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘序 DiskIdxMap. 默认: 无",
+        "description": "请输入SATA控制器盘序 DiskIdxMap. DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无",
         "detailedinfo": "按顺序从左到右每两位数为一个控制器的盘序数值,这两位数为16进制数, 不足两位前面补0,\n比如SataPortMap=148 时 DiskIdxMap=000105 的表示:\n第一个控制器的磁盘从序号1开始往后排,\n第二个控制器的磁盘从序号2开始往后排,\n第三个驱动器的磁盘从序号5开始往后排.\n此时在群晖系统里面看到磁盘序号就是1-13连续的.",
         "required": false,
         "default": "",
@@ -139,7 +139,7 @@
     },
     "sataportmap": {
         "name": "sataportmap",
-        "description": "【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap. 默认: 无",
+        "description": "请输入SATA控制器盘数 SataPortMap. DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无",
         "detailedinfo": "在群辉系统中, 一个控制器默认只能控制9个硬盘, 所以SataPortMap=的数值范围只能是0-9,\n0则表示屏蔽该控制器, 不可以设为SataPortMap=0来隐藏引导盘!\nSataPortMap=148表示第一个控制器有1个硬盘, 第二个控制器有4个硬盘, 第三个控制器有8个硬盘.",
         "required": false,
         "default": "",
@@ -147,15 +147,15 @@
     },
     "sasidxmap": {
         "name": "sasidxmap",
-        "description": "【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SAS控制器硬盘数. 默认: 无",
-        "detailedinfo": "请输入SAS控制器硬盘数, 默认使用SATA硬盘的时候设置为0.",
+        "description": "请输入SAS控制器盘数 SasIdxMap. DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无",
+        "detailedinfo": "默认使用SATA硬盘的时候设置为0.",
         "required": false,
         "default": "",
         "type": "string"
     },
     "dtb": {
         "name": "dtb",
-        "description": "【DS920+, DS1621+, DS2422+, DVA1622】需要, dtb 文件的下载链接.(支持的文件类型: .dts,.dtb,.tar.gz,.zip)",
+        "description": "请输入 dtb 文件的下载链接(支持的文件类型: .dts,.dtb,.tar.gz,.zip), 仅 DS920+, DS1621+, DS2422+, DVA1622 需要填写, 其他型号请勿填写. ",
         "detailedinfo": "需要自行制作dts/dtb 文件, 制作方法参考主页说明.",
         "required": false,
         "default": "",
@@ -163,7 +163,7 @@
     },
     "ext": {
         "name": "ext",
-        "description": "请输入扩展驱动, 多个请以','间隔(请酌情添加, 太多编不过). eg: r8125, tg3",
+        "description": "请输入需要集成的扩展, 多个请以','间隔(请酌情添加, 太多编不过). eg: r8125, tg3",
         "detailedinfo": "普通模式默认使用pocopico的驱动库,\ndev模式默认使用我fork的驱动库(如果报 Checksum 错, 请尝试使用(dev)模式)\n第三方驱动请在issues页面手动加入.",
         "required": false,
         "default": "",
@@ -171,8 +171,8 @@
     },
     "exp": {
         "name": "exp",
-        "description": "请选择编译依赖的基础库. (7.1 优先选 pocopico, 7.0/jun 优先选 jumkey.)",
-        "detailedinfo": "请选择编译依赖的基础库.",
+        "description": "请选择编译依赖的基础库.",
+        "detailedinfo": "7.0/jun 优先选 jumkey.",
         "required": true,
         "default": "pocopico",
         "type": "choice",
@@ -184,7 +184,7 @@
     "jun": {
         "name": "jun",
         "description": "请选择是否jun模式编译. (仅7.0.1-42218 版本可选, jun模式 支持在线升级, 非jun模式不支持升级.)",
-        "detailedinfo": "请选择是否jun模式编译.",
+        "detailedinfo": "仅7.0.1-42218 版本可选, jun模式 支持在线升级, 非jun模式不支持升级.",
         "required": true,
         "default": "0",
         "type": "choice",

@@ -36,11 +36,11 @@
 platform         | √    |"DS3622xs+"     | 请选择你需要编译的型号. "DS918+", "DS920+", "DS1621+", "DS2422+", "DS3615xs", "DS3617xs", "DS3622xs+", "DVA1622", "DVA3221","RS4021xs+"  
 version          | √    |"7.0.1-42218"   | 请选择你需要编译的版本. "7.1.1-42962", "7.1.0-42661", "7.0.1-42218", "6.2.4-25556"  
 config           | ×    |-               | 如不了解请保持默认, 设置默认 user_config.json <sup>[①]()</sup>
-maxdisks         | ×    |-               | 如不了解请保持默认, 请输入 maxdisks. 默认: 无, 范围: 1~32  
-maxlanport       | ×    |7               | 如不了解请保持默认, 请输入 maxlanport. 默认: 7, 范围: 0~31  
-internalportcfg  | ×    |"0xffff"        | 如不了解请保持默认, 请输入 internalportcfg(十六进制数). <sup>[④]()</sup> 默认: 0xffff  
-esataportcfg     | ×    |-               | 如不了解请保持默认, 请输入 esataportcfg(十六进制数). <sup>[④]()</sup> 默认: 无  
-usbportcfg       | ×    |-               | 如不了解请保持默认, 请输入 usbportcfg(十六进制数). <sup>[④]()</sup> 默认: 无  
+maxdisks         | ×    |-               | 如不了解请保持默认, 请输入最大硬盘数 maxdisks. 默认: 无, 范围: 1~32  
+maxlanport       | ×    |7               | 如不了解请保持默认, 请输入最大网卡索引 maxlanport. 默认: 7, 范围: 0~31  
+internalportcfg  | ×    |"0xffff"        | 如不了解请保持默认, 请输入sata接口配置 internalportcfg(十六进制数). <sup>[④]()</sup> 默认: 0xffff  
+esataportcfg     | ×    |-               | 如不了解请保持默认, 请输入esata接口配置 esataportcfg(十六进制数). <sup>[④]()</sup> 默认: 无  
+usbportcfg       | ×    |-               | 如不了解请保持默认, 请输入usb接口配置 usbportcfg(十六进制数). <sup>[④]()</sup> 默认: 无  
 ~sn~             | ×    |-               | ~序列号. 默认根据型号随机生成.~ <sup>[②]()</sup>  
 ~mac~            | ×    |-               | ~MAC地址. 多个请以 "," 间隔. 默认根据型号随机生成.~ <sup>[②]()</sup>  
 netif_num        | ×    |2               | 请输入网卡数量 netif_num. 默认: 2, 范围: 1~8  
@@ -48,8 +48,8 @@ vid              | ×    |"0x46f4"        | 请输入USB设备供应商识别码
 pid              | ×    |"0x0001"        | 请输入USB设备产品识别码(Product ID). 默认: 0x0001  
 diskidxmap       | ×    |-               | 请输入SATA控制器盘序 DiskIdxMap. <sup>[④]()</sup> DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无  
 sataportmap      | ×    |-               | 请输入SATA控制器盘数 SataPortMap. <sup>[④]()</sup> DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无  
-sasidxmap        | ×    |-               | 请输入SAS控制器盘数 sasidxmap. <sup>[④]()</sup> DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无  
-dtb              | ×    |-               | 请输入dtb文件下载URL(support ext: .dts,.dtb,.tar.gz,.zip), 仅 DS920+, DS1621+, DS2422+, DVA1622 需要填写, 其他型号请勿填写. [#47](https://github.com/wjz304/Redpill_CustomBuild/issues/47)  
+sasidxmap        | ×    |-               | 请输入SAS控制器盘数 SasIdxMap. <sup>[④]()</sup> DS920+, DS1621+, DS2422+, DVA1622 不需要填写. 默认: 无  
+dtb              | ×    |-               | 请输入dtb 文件的下载链接(支持的文件类型: .dts,.dtb,.tar.gz,.zip), 仅 DS920+, DS1621+, DS2422+, DVA1622 需要填写, 其他型号请勿填写. [#47](https://github.com/wjz304/Redpill_CustomBuild/issues/47)  
 ext              | ×    |-               | 请输入需要集成的扩展, 多个请以 "," 间隔. 支持名字（pocopico库）或者链接，名字参考[exts.json](./exts.json). eg: "r8125, tg3" 
 exp              | ×    |"pocopico"      | 请选择编译依赖的基础库. "pocopico", "jumkey"  
 jun              | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun模式，jun模式 支持 7.0.1~7.1.1 的 DSM.  
