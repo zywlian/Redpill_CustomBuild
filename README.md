@@ -35,33 +35,33 @@
 -----------------|------|----------------|---------  
 platform         | √    |"DS3622xs+"     | 选择你需要编译的型号. "DS918+", "DS920+", "DS1621+", "DS2422+", "DS3615xs", "DS3617xs", "DS3622xs+", "DVA1622", "DVA3221","RS4021xs+"  
 version          | √    |"7.0.1-42218"   | 选择你需要编译的版本. "7.1.1-42962", "7.1.0-42661", "7.0.1-42218", "6.2.4-25556"  
-config           | ×    |-               | 如不了解请保持默认, 设置默认 user_config.json [①]  参考[#931](https://github.com/wjz304/Redpill_CustomBuild/issues/931)  
+config           | ×    |-               | 如不了解请保持默认, 设置默认 user_config.json <sup>[①]()</sup>
 maxdisks         | ×    |-               | 如不了解请保持默认, 请输入 maxdisks. 默认: 无, 范围: 1~32  
 maxlanport       | ×    |7               | 如不了解请保持默认, 请输入 maxlanport. 默认: 7, 范围: 0~31  
-internalportcfg  | ×    |"0xffff"        | 如不了解请保持默认, 请输入internalportcfg(十六进制数)[④]. 默认: 0xffff  
-esataportcfg     | ×    |-               | 如不了解请保持默认, 请输入 esataportcfg(十六进制数)[④]. 默认: 无  
-usbportcfg       | ×    |-               | 如不了解请保持默认, 请输入 usbportcfg(十六进制数). 默认: 无  
-~sn~             | ×    |-               | ~序列号. 默认根据型号随机生成.~ [②]  
-~mac~            | ×    |-               | ~MAC地址. 多个请以 "," 间隔. 默认根据型号随机生成.~ [②]  
+internalportcfg  | ×    |"0xffff"        | 如不了解请保持默认, 请输入 internalportcfg(十六进制数).<sup>[④]()</sup> 默认: 0xffff  
+esataportcfg     | ×    |-               | 如不了解请保持默认, 请输入 esataportcfg(十六进制数).<sup>[④]()</sup> 默认: 无  
+usbportcfg       | ×    |-               | 如不了解请保持默认, 请输入 usbportcfg(十六进制数).<sup>[④]()</sup> 默认: 无  
+~sn~             | ×    |-               | ~序列号. 默认根据型号随机生成.~ <sup>[②]()</sup>  
+~mac~            | ×    |-               | ~MAC地址. 多个请以 "," 间隔. 默认根据型号随机生成.~ <sup>[②]()</sup>  
 netif_num        | ×    |2               | 请输入网卡数量 netif_num. 默认: 2, 范围: 1~8  
 vid              | ×    |"0x46f4"        | 请输入USB设备供应商识别码(Vender ID). 默认: 0x46f4  
 pid              | ×    |"0x0001"        | 请输入USB设备产品识别码(Product ID). 默认: 0x0001  
-diskidxmap       | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘序 DiskIdxMap[④]. 默认: 无  
-sataportmap      | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap[④]. 默认: 无  
-sasidxmap        | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap[④]. 默认: 无  
+diskidxmap       | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘序 DiskIdxMap.<sup>[④]()</sup> 默认: 无  
+sataportmap      | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap.<sup>[④]()</sup> 默认: 无  
+sasidxmap        | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap.<sup>[④]()</sup> 默认: 无  
 dtb              | ×    |-               | dtb文件下载URL(support ext: .dts,.dtb,.tar.gz,.zip) [#47](https://github.com/wjz304/Redpill_CustomBuild/issues/47)  
-ext              | ×    |-               | 多个请以 "," 间隔. 支持名字（pocopico库）或者链接，名字参考[rp-ext](./exts.json). eg: "r8125, tg3", 链接参考[#753](https://github.com/wjz304/Redpill_CustomBuild/issues/753)  
+ext              | ×    |-               | 多个请以 "," 间隔. 支持名字（pocopico库）或者链接，名字参考[exts.json](./exts.json). eg: "r8125, tg3" 
 exp              | ×    |"pocopico"      | 编译依赖的基础库. "pocopico", "jumkey" (大佬的抉择，7.1 优先选 pocopico, 7.0-jun 优先选 jumkey)  
 jun              | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun模式，jun模式 支持 7.0.1~7.1.1 的 DSM.  
-\-               | ×    |-               | 高级自定义 [③]  
+\-               | ×    |-               | 高级自定义 <sup>[③]()</sup>  
 
 ```
-*①: 格式 json, key会更新到默认的user_config.json中, 因此请谨慎编写.
+①: 格式 json, key会更新到默认的user_config.json中, 因此请谨慎编写.
   - 比如 想修改 maxlanport, 需要填写完整的 synoinfo 属性, 当仅填写 {"synoinfo": {"maxlanport": "8"}} 时, 将更新 synoinfo 为只有 maxlanport, 原有 internalportcfg 将会丢失.
-*②: 由于SN/MAC发生盗用情况, 不再接受SN/MAC的定制, 请勿再填写.
-*③: body 中可直接插入shell脚本："由于权限太高, 防止有些人执行非法操作, 仅仓库作者可操作, 请联系该仓库管理员或者fork到自己名下操作."   
+②: 由于SN/MAC发生盗用情况, 不再接受SN/MAC的定制, 请勿再填写.
+③: body 中可直接插入shell脚本："由于权限太高, 防止有些人执行非法操作, 仅仓库作者可操作, 请联系该仓库管理员或者fork到自己名下操作."   
   - 在 body 中 以 ```xxx``` 包裹自定义的 shell 命令, 将在 build 前运行. 参考[#3](https://github.com/wjz304/Redpill_CustomBuild/issues/3) 
-*④： 详细信息请查看：https://github.com/wjz304/Redpill_CustomBuild/issues/1252#issuecomment-1242677916
+④：详细信息请查看：https://github.com/wjz304/Redpill_CustomBuild/issues/1252#issuecomment-1242677916
 ```
 
 ## 说明
@@ -72,7 +72,7 @@ jun              | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun
 4. 每日构建, 打上'schedule' [【👉标签说明】](https://github.com/wjz304/Redpill_CustomBuild/blob/main/guide/Issues.md#issues-%E6%AF%8F%E6%97%A5%E5%BE%AA%E7%8E%AF%E6%9E%84%E5%BB%BA%E6%95%99%E7%A8%8B)标签 将会每日构建(通过Reopen的方式, 因此如果构建失败Issues没有Closed 将终止).  
 5. 驱动的选择请参考[【👉驱动列表】](./drivers.md).     
 6. 根据github官方说明所有的编译结果保留90天，周知.
-7. 如果没有魔法, 附件下载不下来, 请在 Issue 中回复 'transfer' 使用快传, 或者参考 https://github.com/wjz304/hosts 设置 hosts.
+7. 如果没有魔法, 参考 https://github.com/wjz304/hosts 设置 hosts.
 8. [【👉问题反馈】](https://github.com/wjz304/Redpill_CustomBuild/issues/807)  交流群 QQ群: [21609194](https://qm.qq.com/cgi-bin/qm/qr?k=8AU8VJ82OR2HB_77g3vsjGKA-rm-p67B&jump_from=webapi)  TG: [https://t.me/Redpill_CustomBuild](https://t.me/Redpill_CustomBuild)  
  `(PS: 在Issues上评论我可能看不到, 邮件太多了, 如长时间未回复请私信.)`  
 9. fork 本项目 Issues 和 Action 使用没有问题的.  
