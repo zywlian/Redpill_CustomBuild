@@ -96,7 +96,7 @@
         setLogo(dev);
         //setTips();
         $("#titleLabel").on("click", changemode);
-        httpGetAsync(cdn + "parameter.json", function (result) {
+        httpGetAsync(cdn + "parameter.json" + "?+Math.random()", function (result) {
           result = JSON.parse(result);
           $("#inputs").find("div").remove(); //html('');
           var html = "";
@@ -124,7 +124,7 @@
       }
 
       function setTips() {
-        httpGetAsync(cdn + "tips.md", function (result) {
+        httpGetAsync(cdn + "tips.md" + "?+Math.random()", function (result) {
           // var html = marked.parse(result).replace('<pre>', "<pre>\n");
           // 引入的文件就是一段md格式的代码，这里就直接解析一下算了
           var html = result.replace(/\`+[^\n]*\n/g, "");
@@ -197,7 +197,7 @@
       }
 
       function changePlatform() {
-        httpGetAsync(cdn + "loads.json", function (result) {
+        httpGetAsync(cdn + "loads.json" + "?+Math.random()", function (result) {
           result = JSON.parse(result);
           var xreleases = result["pocopico_develop"][$("#platform").val()];
           var isselect = false;
@@ -218,7 +218,7 @@
       }
 
       function changeversion() {
-        httpGetAsync(cdn + "loads.json", function (result) {
+        httpGetAsync(cdn + "loads.json" + "?+Math.random()", function (result) {
           result = JSON.parse(result);
           var xreleases = result["jumkey_develop"][$("#platform").val()];
           var isselect = false;
@@ -258,7 +258,7 @@
         platform = $("#platform").val().replace("+", "p").toLowerCase();
         version = $("#version").val().split("-")[1];
         var exts = {};
-        httpGetAsync(cdn + "exts.json", function (result) {
+        httpGetAsync(cdn + "exts.json" + "?+Math.random()", function (result) {
           result = JSON.parse(result);
           extskey = "pocopico";
           if (dev == "1") extskey = "wjz304";
@@ -331,7 +331,7 @@
         var title = "Custom";
         var body = {};
 
-        httpGetAsync(cdn + "parameter.json", function (result) {
+        httpGetAsync(cdn + "parameter.json" + "?+Math.random()", function (result) {
           result = JSON.parse(result);
           for (var key in result) {
             var name = result[key]["name"];
