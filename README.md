@@ -46,9 +46,9 @@ usbportcfg       | ×    |-               | 如不了解请保持默认, 请输�
 netif_num        | ×    |2               | 请输入网卡数量 netif_num. 默认: 2, 范围: 1~8  
 vid              | ×    |"0x46f4"        | 请输入USB设备供应商识别码(Vender ID). 默认: 0x46f4  
 pid              | ×    |"0x0001"        | 请输入USB设备产品识别码(Product ID). 默认: 0x0001  
-diskidxmap       | ×    |-               | 【DS920+, DS1621+, DVA1622】不需要, 请输入SATA控制器盘序 DiskIdxMap[④]. 默认: 无  
-sataportmap      | ×    |-               | 【DS920+, DS1621+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap[④]. 默认: 无  
-sasidxmap        | ×    |-               | 【DS920+, DS1621+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap[④]. 默认: 无  
+diskidxmap       | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘序 DiskIdxMap[④]. 默认: 无  
+sataportmap      | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap[④]. 默认: 无  
+sasidxmap        | ×    |-               | 【DS920+, DS1621+, DS2422+, DVA1622】不需要, 请输入SATA控制器盘数 SataPortMap[④]. 默认: 无  
 dtb              | ×    |-               | dtb文件下载URL(support ext: .dts,.dtb,.tar.gz,.zip) [#47](https://github.com/wjz304/Redpill_CustomBuild/issues/47)  
 ext              | ×    |-               | 多个请以 "," 间隔. 支持名字（pocopico库）或者链接，名字参考[rp-ext](./exts.json). eg: "r8125, tg3", 链接参考[#753](https://github.com/wjz304/Redpill_CustomBuild/issues/753)  
 exp              | ×    |"pocopico"      | 编译依赖的基础库. "pocopico", "jumkey" (大佬的抉择，7.1 优先选 pocopico, 7.0-jun 优先选 jumkey)  

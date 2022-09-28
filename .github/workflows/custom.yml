@@ -827,18 +827,22 @@ jobs:
           # cp -fv ./redpill.ko ../ext/rp-lkm/redpill-linux-v$(modinfo --field=vermagic ./redpill.ko | awk '{print $1}').ko
           # cd ..
 
-          if [ ${platform} == 'DS920+' -o ${platform} == 'DS1621+' -o ${platform} == 'DVA1622' ]; then
-            echo "==================DS920+/DS1621+/DVA1622 .dtb==================="
-            ./ext-manager.sh add https://raw.githubusercontent.com/wjz304/rp-ext/master/redpill-dtb-static/rpext-index.json
-            ./ext-manager.sh _update_platform_exts ${synoplatform}_${synoversion} redpill-dtb-static
+          dtbs=(DS920+ DS1621+ DS2422+ DVA1622)
+          for item in ${dtbs[@]}
+          do
+            if [ "${item}" == "${platform}" ]; then
+              echo "============================Add .dtb============================"
+              ./ext-manager.sh add https://raw.githubusercontent.com/wjz304/rp-ext/master/redpill-dtb-static/rpext-index.json
+              ./ext-manager.sh _update_platform_exts ${synoplatform}_${synoversion} redpill-dtb-static
 
-            if [ -n "${{ steps.info.outputs.dtb }}" ]; then
-              dtbuserfile="${{ steps.info.outputs.dtb }}"
-              dtbextfile="$(find custom -name model_${synoplatform}.dtb)"
-              echo Copying ${dtbuserfile} to ${dtbextfile} ...
-              sudo cp ${dtbuserfile} ${dtbextfile}
+              if [ -n "${{ steps.info.outputs.dtb }}" ]; then
+                dtbuserfile="${{ steps.info.outputs.dtb }}"
+                dtbextfile="$(find custom -name model_${synoplatform}.dtb)"
+                echo Copying ${dtbuserfile} to ${dtbextfile} ...
+                sudo cp ${dtbuserfile} ${dtbextfile}
+              fi
             fi
-          fi
+          done
 
           # 添加扩展驱动
           echo "==========================添加扩展驱动==========================="
