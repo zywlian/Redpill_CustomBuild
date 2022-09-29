@@ -218,8 +218,15 @@ jobs:
 
                 if config != '':
                     try:
-                        config = json.dumps(config)
-                        json.loads(config)
+                        if isinstance(config, str):
+                            config = json.loads(config)
+                        if isinstance(config, dict):
+                            config = json.dumps(config)
+                            json.loads(config)
+                        else:
+                            if iscustom == 'true':
+                                iscustom = 'false'
+                                errinfo = 'config 参数错误, 不符合JSON规范.'
                     except Exception as e:
                         if iscustom == 'true':
                             iscustom = 'false'
