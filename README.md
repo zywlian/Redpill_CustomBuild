@@ -76,8 +76,7 @@ jun              | ×    |"0"             | 仅7.0.1-42218 版本可以选择jun
 8. [【👉问题反馈】](https://github.com/wjz304/Redpill_CustomBuild/issues/807)  交流群 QQ群: [21609194](https://qm.qq.com/cgi-bin/qm/qr?k=8AU8VJ82OR2HB_77g3vsjGKA-rm-p67B&jump_from=webapi)  TG: [https://t.me/Redpill_CustomBuild](https://t.me/Redpill_CustomBuild)  
  `(PS: 在Issues上评论我可能看不到, 邮件太多了, 如长时间未回复请私信.)`  
 9. fork 本项目 Issues 和 Action 使用没有问题的.  
-  但是快速创建的WEB页面由于 涉及 guthub 的 pages, 且含有CDN加速, 存在一些硬编码, 如要使用, 需要开通pages后修改创建issues的指向方可使用.  
-  (docs/Issues.html 文件中搜索 `var repo = "wjz304/Redpill_CustomBuild";` 替换为你的库.)  
+  但是快速创建的WEB页面由于 涉及 guthub 的 pages, 且含有CDN加速, 存在一些硬编码, 如要使用, 需要开通pages后方可使用.  
 10. 在Issues下评论 "transfer" 附件转快传 🚲->🏍. (请勿重复发, 转换操作时间 ≈ 该Issue编译成功次数 X 3分钟).
 11. 在Issues下评论 "delete builds" 即可删该Issues的所有历史编译记录.
 12. Web页 Title 后面的红色标签是可以点击的哦!(***PS：只有读到这里的人才会知道.***)  
