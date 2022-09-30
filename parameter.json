@@ -155,8 +155,8 @@
     },
     "dtb": {
         "name": "dtb",
-        "description": "请输入 dtb 文件的下载链接(支持的文件类型: .dts,.dtb,.tar.gz,.zip), 仅 DS920+, DS1621+, DS2422+, DVA1622 需要填写, 其他型号请勿填写. ",
-        "detailedinfo": "需要自行制作dts/dtb 文件, 制作方法参考主页说明.",
+        "description": "请输入 dtb 文件的下载链接, 仅 DS920+, DS1621+, DS2422+, DVA1622 需要填写, 其他型号请勿填写. ",
+        "detailedinfo": "需要自行制作dts/dtb 文件, 制作方法参考主页说明.\n支持的文件类型: .dts,.dtb,.tar.gz,.zip",
         "required": false,
         "default": "",
         "type": "string"
