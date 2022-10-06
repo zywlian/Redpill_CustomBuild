@@ -921,16 +921,16 @@ jobs:
           function getpaturl() {
             case $1 in
             6.2.4-25556)
-                paturl=https://global.download.synology.com/download/DSM/release/6.2.4/25556/DSM_%2_25556.pat
+                paturl=https://global.download.synology.com/download/DSM/release/6.2.4/25556/DSM_$2_25556.pat
                 ;;
             7.0.1-42218)
-                paturl=https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_%2_42218.pat
+                paturl=https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_$2_42218.pat
                 ;;
             7.1.0-42661)
-                paturl=https://global.download.synology.com/download/DSM/release/7.1/42661-1/DSM_%2_42661.pat
+                paturl=https://global.download.synology.com/download/DSM/release/7.1/42661-1/DSM_$2_42661.pat
                 ;;
             7.1.1-42962)
-                paturl=https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_%2_42962.pat
+                paturl=https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_$2_42962.pat
                 ;;
             esac
           }
