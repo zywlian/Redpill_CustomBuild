@@ -922,23 +922,21 @@ jobs:
             case $1 in
             6.2.4-25556)
                 paturl=https://global.download.synology.com/download/DSM/release/6.2.4/25556/DSM_%2_25556.pat
-                paturl=${paturl/+/%2B}
                 ;;
             7.0.1-42218)
                 paturl=https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_%2_42218.pat
-                paturl=${paturl/+/%2B}
                 ;;
             7.1.0-42661)
                 paturl=https://global.download.synology.com/download/DSM/release/7.1/42661-1/DSM_%2_42661.pat
-                paturl=${paturl/+/%2B}
                 ;;
             7.1.1-42962)
                 paturl=https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_%2_42962.pat
-                paturl=${paturl/+/%2B}
                 ;;
             esac
           }
-          echo -e "\nPAT:\n$(getpaturl ${{ steps.info.outputs.version }} ${{ steps.info.outputs.platform }})" >> redpill-load/body#${{ env.issuenumber }}.txt
+          getpaturl ${{ steps.info.outputs.version }} ${{ steps.info.outputs.platform }}
+          paturl=${paturl/+/%2B}
+          echo -e "\nPAT:\n${paturl}" >> redpill-load/body#${{ env.issuenumber }}.txt
 
       - name: Upload to Artifacts
         if: steps.info.outputs.iscustom == 'true' && success()
