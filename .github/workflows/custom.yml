@@ -685,11 +685,11 @@ jobs:
             if [ "$2" == "42962" ]; then
               path=7.1.1/42962
             fi
-            curl -L https://cndl.synology.cn/download/DSM/release/${path}/DSM_$1_$2.pat -o ds.pat
+            curl -L https://global.download.synology.com/download/DSM/release/${path}/DSM_$1_$2.pat -o ds.pat
             if [ "$1" == "DVA1622" ]; then
-              curl -L https://cndl.synology.cn/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat -o oldpat.tar.gz
+              curl -L https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat -o oldpat.tar.gz
             else
-              curl -L https://cndl.synology.cn/download/DSM/release/7.0.1/42218/DSM_$1_42218.pat -o oldpat.tar.gz
+              curl -L https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_$1_42218.pat -o oldpat.tar.gz
             fi
             mkdir synoesp && tar -C./synoesp/ -xf oldpat.tar.gz rd.gz
             cd synoesp
@@ -914,10 +914,31 @@ jobs:
 
           if [ -f 'body#${{ env.issuenumber }}.txt' ]; then
             cp body#${{ env.issuenumber }}.txt redpill-load/body#${{ env.issuenumber }}.txt
-            echo -e "\n\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> redpill-load/body#${{ env.issuenumber }}.txt
+            echo -e "\n\nBOOT:\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> redpill-load/body#${{ env.issuenumber }}.txt
           else
-            echo -e "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> redpill-load/body#actions.txt
+            echo -e "BOOT:\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> redpill-load/body#actions.txt
           fi
+          function getpaturl() {
+            case $1 in
+            6.2.4-25556)
+                paturl=https://global.download.synology.com/download/DSM/release/6.2.4/25556/DSM_%2_25556.pat
+                paturl=${paturl/+/%2B}
+                ;;
+            7.0.1-42218)
+                paturl=https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_%2_42218.pat
+                paturl=${paturl/+/%2B}
+                ;;
+            7.1.0-42661)
+                paturl=https://global.download.synology.com/download/DSM/release/7.1/42661-1/DSM_%2_42661.pat
+                paturl=${paturl/+/%2B}
+                ;;
+            7.1.1-42962)
+                paturl=https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_%2_42962.pat
+                paturl=${paturl/+/%2B}
+                ;;
+            esac
+          }
+          echo -e "\nPAT:\n$(getpaturl ${{ steps.info.outputs.version }} ${{ steps.info.outputs.platform }})" >> redpill-load/body#${{ env.issuenumber }}.txt
 
       - name: Upload to Artifacts
         if: steps.info.outputs.iscustom == 'true' && success()
