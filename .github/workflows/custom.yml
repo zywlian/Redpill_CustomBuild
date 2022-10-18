@@ -794,6 +794,10 @@ jobs:
           if [ ${repo} == 'pocopico' -a ${branch} == 'develop' ]; then 
             # cd redpill-load && git reset --hard d810a64a33fdc84287ab68e2d5919763c725ebeb && cd ..
 
+            sed -i 's|"@@@COMMON@@@/ramdisk-004-network-hosts.patch",|"@@@COMMON@@@/ramdisk-004-network-hosts.patch"|g' redpill-load/config/DS918+/7.0.1-42218/config.json
+            sed -i 's|"@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch"||g' redpill-load/config/DS918+/7.0.1-42218/config.json
+
+
             cp -r redpill-load/config/DS920+ redpill-load/config/DS1520+
             #find redpill-load/config/DS1520+ -type d -name '*920*' -execdir rename 's/920p/1520p/' '{}' +
             find redpill-load/config/DS1520+ -type f -name '*920*' -exec rename 's/920p/1520p/' '{}' +
