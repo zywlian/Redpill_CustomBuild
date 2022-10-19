@@ -910,15 +910,18 @@ jobs:
           for item in ${dtbs[@]}
           do
             if [ "${item}" == "${platform}" ]; then
-              echo "============================Add .dtb============================"
-              ./ext-manager.sh add https://raw.githubusercontent.com/wjz304/rp-ext/master/redpill-dtb-static/rpext-index.json
-              ./ext-manager.sh _update_platform_exts ${synoplatform}_${synoversion} redpill-dtb-static
-
               if [ -n "${{ steps.info.outputs.dtb }}" ]; then
+                echo "=====================Add redpill-dtb-static====================="
+                ./ext-manager.sh add https://raw.githubusercontent.com/wjz304/rp-ext/master/redpill-dtb-static/rpext-index.json
+                ./ext-manager.sh _update_platform_exts ${synoplatform}_${synoversion} redpill-dtb-static
                 dtbuserfile="${{ steps.info.outputs.dtb }}"
                 dtbextfile="$(find custom -name model_${synoplatform}.dtb)"
                 echo Copying ${dtbuserfile} to ${dtbextfile} ...
                 sudo cp ${dtbuserfile} ${dtbextfile}
+              else
+                echo "========================Add redpill-dtb========================="
+                ./ext-manager.sh add https://raw.githubusercontent.com/wjz304/rp-ext/master/redpill-dtb/rpext-index.json
+                ./ext-manager.sh _update_platform_exts ${synoplatform}_${synoversion} pocopico.dtb
               fi
             fi
           done
