@@ -362,27 +362,26 @@ jobs:
             core.setOutput("issues", JSON.stringify(issues));
 
       - name: Reopen Issues
-        uses: jannekem/run-python-script-action@v1.2
-        with:
-          script: |
-            import os, json, requests
+        shell: python
+        run: |
+          import os, json, requests
 
-            if __name__ == '__main__':
+          if __name__ == '__main__':
 
-                try:
-                    issues = {}
-                    issues = json.loads(${{ steps.get-issues.outputs.issues }})
+              try:
+                  issues = {}
+                  issues = json.loads(${{ steps.get-issues.outputs.issues }})
 
-                    if len(issues) > 0:
-                        headers = {'Accept': 'application/vnd.github+json', 'Authorization': 'token ${{ secrets.ISSUES }}'}
-                        data = '{"state": "open"}'
-                        for item in issues:
-                            try:
-                                url='https://api.github.com/repos/{}/issues/{}'.format('${{ github.repository }}', item['number'])
-                                res = requests.post(url=url, data=data, headers=headers)
-                                print(url)
-                                print(res.json())
-                            except:
-                                pass
-                except Exception as err:
-                    print(err)
+                  if len(issues) > 0:
+                      headers = {'Accept': 'application/vnd.github+json', 'Authorization': 'token ${{ secrets.ISSUES }}'}
+                      data = '{"state": "open"}'
+                      for item in issues:
+                          try:
+                              url='https://api.github.com/repos/{}/issues/{}'.format('${{ github.repository }}', item['number'])
+                              res = requests.post(url=url, data=data, headers=headers)
+                              print(url)
+                              print(res.json())
+                          except:
+                              pass
+              except Exception as err:
+                  print(err)
