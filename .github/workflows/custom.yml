@@ -524,7 +524,7 @@ jobs:
 
       - name: Add Issues labels
         if: env.issues == 'true' && env.iscustom == 'true'
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -533,7 +533,7 @@ jobs:
 
       - name: Create Issues comment
         if: env.issues == 'true' && env.iscustom == 'true'
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -547,7 +547,7 @@ jobs:
 
       - name: Create Issues comment
         if: env.issues == 'true' && env.iscustom == 'false'
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -563,7 +563,7 @@ jobs:
 
       - name: Warning Issues comment
         if: env.issues == 'true' && env.warinfo != ''
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -1055,7 +1055,7 @@ jobs:
 
       - name: Create Issues Comment
         if: env.issues == 'true' && env.iscustom == 'true' && success()
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -1074,7 +1074,7 @@ jobs:
 
       - name: Close Issues
         if: env.issues == 'true' && env.iscustom == 'true' && success()
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'close-issue'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -1082,7 +1082,7 @@ jobs:
 
       - name: Create Issues Comment
         if: env.issues == 'true' && env.iscustom == 'true' && failure()
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -1100,7 +1100,7 @@ jobs:
 
       - name: Warning Download comment
         if: env.issues == 'true' && env.warinfo != ''
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}

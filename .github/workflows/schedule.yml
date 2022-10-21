@@ -50,7 +50,7 @@ jobs:
     steps:
       - name: Find runs comments
         id: find-runs
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'find-comments'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -159,7 +159,7 @@ jobs:
           echo 'EOF' >> $GITHUB_ENV
     
       - name: Create Issues Comment
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -175,7 +175,7 @@ jobs:
 
       - name: Find bots comments
         id: find-bots
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'find-comments'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -184,7 +184,7 @@ jobs:
 
       - name: Find runs comments
         id: find-runs
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'find-comments'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -326,7 +326,7 @@ jobs:
             core.setOutput("labels", labels.join(","));
 
       - name: Set labels
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'set-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -343,7 +343,7 @@ jobs:
 
       - name: Find schedule issues
         id: find-issues
-        uses: wjz304/issues-helper@main
+        uses: actions-cool/issues-helper@v3
         with:
           actions: 'find-issues'
           token: ${{ secrets.GITHUB_TOKEN }}
