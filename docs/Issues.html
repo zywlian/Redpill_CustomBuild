@@ -70,8 +70,12 @@
         var arr = url.split("?")[0].split("/");
         if (arr.length > 1) {
           for (var i = 0; i < arr.length; i++) {
-            if ((arr[i].indexOf(".github.io") >= 0) && (i+1 < arr.length) && (arr[i+1].length > 0)) {
-              return arr[i].replace(".github.io","") + "/" + arr[i+1];
+            if (
+              arr[i].indexOf(".github.io") >= 0 &&
+              i + 1 < arr.length &&
+              arr[i + 1].length > 0
+            ) {
+              return arr[i].replace(".github.io", "") + "/" + arr[i + 1];
             }
           }
         }
@@ -107,7 +111,7 @@
       window.onload = function () {
         setLogo(dev);
         setTitle();
-        //setTips();
+        setTips();
         $("#titleLabel").on("click", changemode);
         httpGetAsync(
           cdn + "parameter.json" + "?+Math.random()",
@@ -142,30 +146,13 @@
       function setTitle() {
         document.title = repo;
         $("#titleA")[0].href = `https://github.com/${repo}`;
-        $("#titleA")[0].innerText = repo.substring(repo.indexOf("/")+1);
+        $("#titleA")[0].innerText = repo.substring(repo.indexOf("/") + 1);
       }
 
       function setTips() {
         httpGetAsync(cdn + "tips.md" + "?+Math.random()", function (result) {
-          // var html = marked.parse(result).replace('<pre>', "<pre>\n");
-          // 引入的文件就是一段md格式的代码，这里就直接解析一下算了
-          var html = result.replace(/\`+[^\n]*\n/g, "");
-          html = html.split("\n");
-          // html = html.splice(1, html.length-2);
-          var css = "";
-          for (var i in html) {
-            css = "";
-            if (html[i].substr(0, 1) == "-") {
-              css = "pl-md";
-            } else {
-              css = "pl-mi1";
-            }
-            if (css) {
-              html[i] = '<span class="' + css + '">' + html[i] + "</span>";
-            }
-          }
-          html = "<pre>" + html.join("\n") + "</pre>";
-          $(".highlight.highlight-source-diff").html(html);
+          var html = result.replace(/\n/g, "<br />");
+          $("#content").html(html);
         });
       }
 
@@ -471,6 +458,10 @@
             >Public</span
           >
         </div>
+        <div class="btn-link tabnav-tab preview-tab js-preview-tab flex-1 flex-md-auto width-full">
+          <marquee id="content" direction="up" height="36" scrollamount="2">
+          </marquee>
+        </div>
       </div>
       <div data-replace-remote-form-target="" class="workflow-dispatch">
         <form id="inputs">
@@ -484,11 +475,6 @@
           </button>
         </form>
       </div>
-      <br />
-      <div
-        id="content"
-        class="highlight highlight-source-diff notranslate position-relative overflow-auto"
-      ></div>
     </div>
     <footer
       class="footer width-full container-xl mt-3 text-center color-fg-muted"
