@@ -25,6 +25,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
+      - name: Create Issues comment
+        if: github.event_name == 'issues'
+        id: comment
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: | 
+            分析 title 和 body 内容 ..  
+            > ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  
+            ----
+          emoji: heart
+
       - name: Set up Ruby 3
         uses: ruby/setup-ruby@v1
         with:
@@ -531,13 +545,14 @@ jobs:
           issue-number: ${{ env.issuenumber }}
           labels: 'custom'
 
-      - name: Create Issues comment
+      - name: Update Comment Begin
         if: env.issues == 'true' && env.iscustom == 'true'
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment'
+          actions: 'update-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ env.issuenumber }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: replace
           body: |
             ${{ env.issueauth }} 您好.  
             您自定义的 Redpill 已开始构建. 请前往下面的 URL 查看详细信息.  
@@ -545,13 +560,14 @@ jobs:
             ----
           emoji: heart
 
-      - name: Create Issues comment
+      - name: Update Comment Error
         if: env.issues == 'true' && env.iscustom == 'false'
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment'
+          actions: 'update-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ env.issuenumber }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: replace
           body: |
             ${{ env.issueauth }} 您好.  
             您自定义 Redpill 所填写的信息有误, 无法触发编译, 请参考模板和错误提示对body进行修改并请重新触发编译(Close & Reopen).  
@@ -561,19 +577,37 @@ jobs:
             ----
           emoji: confused
 
-      - name: Warning Issues comment
+      - name: Update Comment Warinfo
         if: env.issues == 'true' && env.warinfo != ''
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment'
+          actions: 'update-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ env.issuenumber }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: append
           body: |
+            >
+            ----
             ‼️‼️‼️ 
             `Body 中含有自定义的 ${{ env.warinfo }} 敏感信息, 为防止其他人盗用, 建议参考以下视频删除敏感信息(不影响本次编译).`  
               
             https://user-images.githubusercontent.com/5615843/187615519-53a6dcf5-a5e2-4731-8889-9eee8955a977.mp4  
             >
+            ----
+          emoji: eyes
+
+      - name: Update Comment Invalid
+        if: env.issues == 'false'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'update-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: replace
+          body: |
+            ${{ env.issueauth }} 您好.  
+            根据 title 和 body 内容的分析, 该 Issue 并非定制 Redpill. 将在管理员看到后会进行回复.  
+            > ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             ----
           emoji: eyes
 
@@ -1053,13 +1087,14 @@ jobs:
           fi
 
 
-      - name: Create Issues Comment
+      - name: Update Comment Finish
         if: env.issues == 'true' && env.iscustom == 'true' && success()
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment'
+          actions: 'update-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ env.issuenumber }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: replace
           body: |
             ${{ env.issueauth }} 您好.
             您自定义的 Redpill 已构建完成. 请前往下面的 URL 下载.  
@@ -1080,13 +1115,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ env.issuenumber }}
 
-      - name: Create Issues Comment
+      - name: Update Comment Fail
         if: env.issues == 'true' && env.iscustom == 'true' && failure()
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment'
+          actions: 'update-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ env.issuenumber }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: replace
           body: |
             ${{ env.issueauth }} 您好.
             您自定义的 Redpill 构建失败. 请前往下面的 URL 查看详细信息对body进行修改并请重新触发编译(Close & Reopen).  
@@ -1098,15 +1134,20 @@ jobs:
             ----  
           emoji: confused
 
-      - name: Warning Download comment
+      - name: Update Comment Warinfo
         if: env.issues == 'true' && env.warinfo != ''
         uses: actions-cool/issues-helper@v3
         with:
-          actions: 'create-comment'
+          actions: 'update-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ env.issuenumber }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: append
           body: |
+            >
+            ----
             ‼️‼️‼️  
             `Body 中含有自定义的 ${{ env.warinfo }} 敏感信息, 为防止其他人盗用, 建议附件下载完成/确认错误原因后删除日志和附件.`
             `在Issues下评论 "delete builds" 即可删Issues的所有历史编译记录.`  
+            >
+            ----
           emoji: eyes
