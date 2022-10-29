@@ -140,7 +140,7 @@ jobs:
           import os, re, json, shutil, string, subprocess
 
           def set_output(name, value):
-              subprocess.call(["echo '{}={}' >> $GITHUB_ENV".format(name, value))], shell=True)
+              subprocess.call(["echo '{}={}' >> $GITHUB_ENV".format(name, value)], shell=True)
 
           if __name__ == '__main__':
 
