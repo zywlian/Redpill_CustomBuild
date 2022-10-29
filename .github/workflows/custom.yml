@@ -140,7 +140,7 @@ jobs:
           import os, re, json, shutil, string, subprocess
 
           def set_output(name, value):
-              subprocess.call(['echo "{}={}" >> $GITHUB_ENV'.format(name, value)], shell=True)
+              subprocess.call(['echo "{}={}" >> $GITHUB_ENV'.format(name, value.replace('"', '\"'))], shell=True)
 
           if __name__ == '__main__':
 
@@ -394,7 +394,8 @@ jobs:
                                           dtb = os.path.abspath('{}.dtb'.format(name))
                                       else:
                                           iscustom = 'false'
-                                          errinfo = 'dtb 参数错误, dts文件内容存在错误 <{}>.'.format(errinfo.replace('\r', '').replace('\n', ' '))
+                                          errinfo = 'dtb 参数错误, dts文件内容存在错误 <{}>.'.format(errinfo.
+                                          lace('\r', '').replace('\n', ' '))
                                   else:
                                       iscustom = 'false'
                                       errinfo = 'dtb 参数错误, 下载 dtc(dts->dtb tools) 失败, 可能是服务器压力过大, 请稍后重试, 或者直接使用 dtb 文件跳过转换.'
