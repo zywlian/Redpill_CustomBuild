@@ -820,7 +820,9 @@ jobs:
           loadext=https://raw.githubusercontent.com/${repo}/redpill-load/${branch}
           if [ ${{ env.dev }} == '1' ]; then 
             rpext=https://raw.githubusercontent.com/wjz304/rp-ext/master
-            loadext=https://raw.githubusercontent.com/wjz304/rp-ext/master
+            if [ ${repo} == 'pocopico' ]; then 
+              loadext=https://raw.githubusercontent.com/wjz304/rp-ext/master
+            fi
           fi
 
           git clone -b ${branch} https://github.com/${repo}/redpill-load redpill-load

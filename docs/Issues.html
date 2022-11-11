@@ -339,7 +339,7 @@
         let formData = new FormData(form);
         var title = "Custom";
         var body = {};
-
+        //body["info"] = "整个编译过程一般在5分钟左右(受驱动数量和版本影响), 并发较多时有概率出现未触发或者网络阻塞的情况, 如长时间未收到[bot]的回复, 请reopen或者重新创建Issue.";
         httpGetAsync(
           cdn + "parameter.json" + "?+Math.random()",
           function (result) {
@@ -358,6 +358,7 @@
                 body[name] = formData.get(`inputs[${name}]`);
               }
             }
+
             if (dev == "1") body["dev"] = "1";
             body = JSON.stringify(body).replace(/\+/g, "%2b");
             window.location.href = `https://github.com/${repo}/issues/new?title=${title}&body=${body}`;
